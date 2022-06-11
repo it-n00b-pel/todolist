@@ -7,7 +7,7 @@ import {
     SetToDoListsAT
 } from "../actions/ActionsForToDoList";
 import {ACTION_TYPE} from "../ENUM/ENUM";
-import {ToDoListType} from "../../api/toDoListAPI";
+import {ToDoListType} from "../../api/ToDoListAPI";
 
 export const AddNewToDoList = (toDoList: ToDoListType): AddNewToDoListAT => {
     return {

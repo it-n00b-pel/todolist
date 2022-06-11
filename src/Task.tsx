@@ -9,7 +9,7 @@ export type TaskPropsType = {
     ToDoListID: string
     taskID: string,
     title: string
-    isDone: boolean,
+    isDone?: boolean,
 }
 
 const Task = memo((props: TaskPropsType) => {

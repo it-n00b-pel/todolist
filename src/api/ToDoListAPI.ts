@@ -20,6 +20,9 @@ export const toDoListAPI = {
     },
     updateToDoList(toDoListID: string, title: string) {
         return instance.put(`todo-lists/${toDoListID}`, {title})
+    },
+    getTasks(toDoListID: string){
+    return instance.get(`todo-lists/${toDoListID}/tasks`)
     }
 
 }
@@ -29,4 +32,17 @@ export type ToDoListType = {
     addedDate: string,
     order: number,
     title: string,
+}
+
+export type TaskType = {
+    addedDate: string
+    deadline: null
+    description: null
+    id: string
+    order: number
+    priority: number
+    startDate: null
+    status: number
+    title: string
+    todoListId: string
 }

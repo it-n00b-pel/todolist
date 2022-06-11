@@ -1,5 +1,12 @@
-import {AddNewTaskAT, ChangeTaskStatusAT, ChangeTaskTitleAT, RemoveTaskAT} from "../actions/ActionsForTasks";
+import {
+    AddNewTaskAT,
+    ChangeTaskStatusAT,
+    ChangeTaskTitleAT,
+    RemoveTaskAT,
+    SetTasksAT
+} from "../actions/ActionsForTasks";
 import {ACTION_TYPE} from "../ENUM/ENUM";
+import {TaskType} from "../../api/ToDoListAPI";
 
 export const AddNewTask = (toDoListID: string, title: string): AddNewTaskAT => {
     return {
@@ -29,5 +36,13 @@ export const ChangeStatusTask = (toDoListID: string, taskID: string, isDone: boo
         toDoListID,
         taskID,
         isDone
+    }
+}
+
+export const SetTasks = (toDoListID: string, tasks: Array<TaskType>): SetTasksAT => {
+    return {
+        type: ACTION_TYPE.SET_TASKS,
+        toDoListID,
+        tasks,
     }
 }

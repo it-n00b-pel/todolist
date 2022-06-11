@@ -1,5 +1,5 @@
 import {FilterType} from "../actions/ActionsForToDoList";
-import {ToDoListType} from "../../api/toDoListAPI";
+import {TaskType, ToDoListType} from "../../api/ToDoListAPI";
 
 export type ToDoListStateType = ToDoListType & {
     filter: FilterType,
@@ -8,11 +8,7 @@ export type ToDoListStateType = ToDoListType & {
 export type TaskStateType = {
     [key: string]: TaskType[],
 }
-export type TaskType = {
-    id: string,
-    title: string,
-    isDone: boolean,
-}
+
 //          ---         INITIAL STATE FOR TODOLIST           ---
 export const initialStateToDoLists: ToDoListStateType[] = [
     // {
@@ -33,12 +29,48 @@ export const initialStateToDoLists: ToDoListStateType[] = [
 
 //          ---         INITIAL STATE FOR TASK           ---
 export const initialStateTask: TaskStateType = {
-    // [todolistId1]: [
-    //     {id: v1(), title: "HTML&CSS", isDone: true},
-    //     {id: v1(), title: "JS", isDone: true},
+    // ["8856fa6c-1ef2-4662-bfb1-afceabc84dc1"]: [
+    //     {addedDate: "2022-06-09T19:34:19.223",
+    //         deadline: null,
+    //         description: null,
+    //         id: "c6bce840-594f-4ca3-bcbb-4be90f21d88d",
+    //         order: -4,
+    //         priority: 1,
+    //         startDate: null,
+    //         status: 0,
+    //         title: "111df",
+    //         todoListId: "063214e7-b827-45df-9af4-788a808c13e4"},
+    //     {addedDate: "2022-06-09T19:34:19.223",
+    //         deadline: null,
+    //         description: null,
+    //         id: "c6bce840-594f-4ca3-bcbb-4be90f2s1d88d",
+    //         order: -4,
+    //         priority: 1,
+    //         startDate: null,
+    //         status: 0,
+    //         title: "111df",
+    //         todoListId: "063214e7-b827-45df-9af4-788a808dc13e4"}
     // ],
-    // [todolistId2]: [
-    //     {id: v1(), title: "Milk", isDone: true},
-    //     {id: v1(), title: "React Book", isDone: true}
-    // ]
+    // ["063214e7-b827-45df-9af4-788a808c13e4"]: [
+    //     {addedDate: "2022-06-09T19:34:19.223",
+    //         deadline: null,
+    //         description: null,
+    //         id: "c6bce840-594f-4ca3-bcbb-4bed90f21d88d",
+    //         order: -4,
+    //         priority: 1,
+    //         startDate: null,
+    //         status: 0,
+    //         title: "222df",
+    //         todoListId: "063214e7-b827-45df-9af4-788a808c13e4"},
+    //     {addedDate: "2022-06-09T19:34:19.223",
+    //         deadline: null,
+    //         description: null,
+    //         id: "c6bce840-594f-4ca3-bcbb-4be90f21d88d",
+    //         order: -4,
+    //         priority: 1,
+    //         startDate: null,
+    //         status: 0,
+    //         title: "222df",
+    //         todoListId: "063214e7-b827-45df-9af4-788a808c13e4"}
+    // ],
 }

@@ -1,5 +1,5 @@
 import {ACTION_TYPE} from "../ENUM/ENUM";
-import {ToDoListType} from "../../api/toDoListAPI";
+import {ToDoListType} from "../../api/ToDoListAPI";
 
 export type FilterType = "all" | "completed" | "active"
 

@@ -7,7 +7,7 @@ import {
     SetToDoListsAT
 } from "../actions/ActionsForToDoList";
 import {ACTION_TYPE} from "../ENUM/ENUM";
-import {toDoListAPI} from "../../api/toDoListAPI";
+import {toDoListAPI} from "../../api/ToDoListAPI";
 import {
     AddNewToDoList,
     ChangeToDoListTitle,
@@ -42,12 +42,6 @@ export const toDoListReducer = (state = initialStateToDoLists, action: ActionTyp
         case ACTION_TYPE.SET_TODOLISTS: {
             return action.toDoLists.map(t => ({...t, filter: "all"}))
         }
-        // const todolist = state.find(tl => tl.toDoListID === action.toDoListID);
-        // if (todolist) {
-        //     // если нашёлся - изменим ему заголовок
-        //     todolist.filter = action.filter;
-        // }
-        // return [...state]
         default :
             return state
     }
@@ -61,7 +55,6 @@ export const fetchToDoListsTC = (): AppThunk => {
             .then((res) => {
                 dispatch(SetToDoLists(res.data))
             })
-
     }
 }
 export const addNewToDoListTC = (title: string): AppThunk => (dispatch) => {

@@ -9,21 +9,17 @@ import {addNewToDoListTC, fetchToDoListsTC} from "./store/reducers/toDoListReduc
 function App() {
     console.log("APP")
     let toDoLists = useAppSelector(state => state.toDoLists);
-    const dispatch  = useAppDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(fetchToDoListsTC())
     }, [dispatch])
 
-
     const addNewToDoList = useCallback((title: string) => {
-        // dispatch(AddNewToDoList(title))
         dispatch(addNewToDoListTC(title))
-
     }, [dispatch])
 
     return (
-
         <div className="App">
             <AddItemForm addItem={addNewToDoList}/>
             <Grid container spacing={3}>
