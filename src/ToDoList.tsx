@@ -3,14 +3,14 @@ import {useSelector} from "react-redux";
 import {AppRootStateType, useAppDispatch} from "./store/store";
 import {TaskType, ToDoListStateType} from "./store/initialState/initialState";
 import {Button, ButtonGroup, IconButton} from "@mui/material";
-import {ChangeToDoListFilter, ChangeToDoListTitle} from "./store/actionCreators/actionCreatorsForToDoList";
+import {ChangeToDoListFilter} from "./store/actionCreators/actionCreatorsForToDoList";
 import {EditableSpan} from "./EditableSpan";
 import AddItemForm from "./AddItemForm";
 import {AddNewTask} from "./store/actionCreators/actionCreatorsForTasks";
 import {FilterType} from "./store/actions/ActionsForToDoList";
 import s from "./ToDoListStyle.module.css"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import {deleteToDoListTC} from "./store/reducers/toDoListReducer";
+import {deleteToDoListTC, updateToDoList} from "./store/reducers/toDoListReducer";
 
 export type ToDoListPropsType = {
     toDoListID: string
@@ -51,11 +51,11 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
     }, [toDoListID, dispatch])
 
     const removeToDoList = useCallback(() => {
-       dispatch(deleteToDoListTC(toDoListID))
+        dispatch(deleteToDoListTC(toDoListID))
     }, [toDoListID, dispatch])
 
     const changeToDoListTitle = useCallback((title: string) => {
-        dispatch(ChangeToDoListTitle(toDoListID, title))
+        dispatch(updateToDoList(toDoListID, title))
     }, [toDoListID, dispatch])
 
     return (

@@ -8,7 +8,12 @@ import {
 } from "../actions/ActionsForToDoList";
 import {ACTION_TYPE} from "../ENUM/ENUM";
 import {toDoListAPI} from "../../api/toDoListAPI";
-import {AddNewToDoList, RemoveToDoList, SetToDoLists} from "../actionCreators/actionCreatorsForToDoList";
+import {
+    AddNewToDoList,
+    ChangeToDoListTitle,
+    RemoveToDoList,
+    SetToDoLists
+} from "../actionCreators/actionCreatorsForToDoList";
 import {AppThunk} from "../store";
 
 export type ActionTypesForToDoLists =
@@ -48,6 +53,8 @@ export const toDoListReducer = (state = initialStateToDoLists, action: ActionTyp
     }
 }
 
+//          ---         THUNK FOR TODOLIST           ---
+
 export const fetchToDoListsTC = (): AppThunk => {
     return (dispatch) => {
         toDoListAPI.getToDoLists()
@@ -58,7 +65,7 @@ export const fetchToDoListsTC = (): AppThunk => {
     }
 }
 export const addNewToDoListTC = (title: string): AppThunk => (dispatch) => {
-    toDoListAPI.addNewToDoList(title).then(res=>{
+    toDoListAPI.addNewToDoList(title).then(res => {
         dispatch(AddNewToDoList(res.data.data.item))
     })
 }
@@ -66,5 +73,11 @@ export const addNewToDoListTC = (title: string): AppThunk => (dispatch) => {
 export const deleteToDoListTC = (toDoListID: string): AppThunk => (dispatch) => {
     toDoListAPI.deleteToDoList(toDoListID).then(res => {
         dispatch(RemoveToDoList(toDoListID))
+    })
+}
+
+export const updateToDoList = (toDoListID: string, title: string): AppThunk => (dispatch) => {
+    toDoListAPI.updateToDoList(toDoListID, title).then(res => {
+        dispatch(ChangeToDoListTitle(toDoListID, title))
     })
 }

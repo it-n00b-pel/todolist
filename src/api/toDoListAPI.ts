@@ -17,7 +17,11 @@ export const toDoListAPI = {
     },
     addNewToDoList(title: string) {
         return instance.post(`todo-lists`, {title})
+    },
+    updateToDoList(toDoListID: string, title: string) {
+        return instance.put(`todo-lists/${toDoListID}`, {title})
     }
+
 }
 
 export type ToDoListType = {
