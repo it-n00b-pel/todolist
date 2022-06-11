@@ -9,7 +9,7 @@ import {
 import {ACTION_TYPE} from "../ENUM/ENUM";
 import {AppThunk} from "../store";
 import {toDoListAPI} from "../../api/ToDoListAPI";
-import {AddNewTask, RemoveTask, SetTasks} from "../actionCreators/actionCreatorsForTasks";
+import {AddNewTask, ChangeTitleTask, RemoveTask, SetTasks} from "../actionCreators/actionCreatorsForTasks";
 
 export type ActionTypesForTasks =
     AddNewTaskAT
@@ -74,5 +74,10 @@ export const AddNewTaskTC = (toDoListID: string, title: string): AppThunk => (di
 export const DeleteTaskTC = (toDoListID: string, taskID: string): AppThunk => (dispatch) => {
     toDoListAPI.deleteTask(toDoListID, taskID).then(res => {
         dispatch(RemoveTask(toDoListID, taskID))
+    })
+}
+export const ChangeTaskTitleTC = (toDoListID: string, taskID: string, title: string): AppThunk => (dispatch) => {
+    toDoListAPI.updateTask(toDoListID, taskID, title).then(res => {
+       dispatch(ChangeTitleTask(toDoListID,taskID,title))
     })
 }

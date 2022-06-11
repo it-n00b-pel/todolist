@@ -2,8 +2,8 @@ import React, {ChangeEvent, memo, useCallback} from "react";
 import {Checkbox, IconButton} from "@mui/material";
 import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@material-ui/icons";
-import {ChangeStatusTask, ChangeTitleTask} from "./store/actionCreators/actionCreatorsForTasks";
-import {DeleteTaskTC} from "./store/reducers/tasksReducer";
+import {ChangeStatusTask} from "./store/actionCreators/actionCreatorsForTasks";
+import {ChangeTaskTitleTC, DeleteTaskTC} from "./store/reducers/tasksReducer";
 import {useAppDispatch} from "./store/store";
 
 export type TaskPropsType = {
@@ -18,7 +18,7 @@ const Task = memo((props: TaskPropsType) => {
     const dispatch = useAppDispatch();
 
     const changeTitleTask = useCallback((title: string) => {
-        dispatch(ChangeTitleTask(props.ToDoListID, props.taskID, title))
+        dispatch(ChangeTaskTitleTC(props.ToDoListID, props.taskID, title))
     }, [dispatch, props.ToDoListID, props.taskID])
     const deleteTask = useCallback(() => {
         dispatch(DeleteTaskTC(props.ToDoListID, props.taskID))
