@@ -69,7 +69,7 @@ export const deleteToDoListTC = (toDoListID: string): AppThunk => (dispatch) => 
     })
 }
 
-export const updateToDoList = (toDoListID: string, title: string): AppThunk => (dispatch) => {
+export const updateToDoListTC = (toDoListID: string, title: string): AppThunk => (dispatch) => {
     toDoListAPI.updateToDoList(toDoListID, title).then(res => {
         dispatch(ChangeToDoListTitle(toDoListID, title))
     })

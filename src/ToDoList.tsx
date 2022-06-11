@@ -8,7 +8,7 @@ import AddItemForm from "./AddItemForm";
 import {FilterType} from "./store/actions/ActionsForToDoList";
 import s from "./ToDoListStyle.module.css"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import {deleteToDoListTC, updateToDoList} from "./store/reducers/toDoListReducer";
+import {deleteToDoListTC, updateToDoListTC} from "./store/reducers/toDoListReducer";
 import Task from "./Task";
 import {AddNewTaskTC, fetchTasks} from "./store/reducers/tasksReducer";
 
@@ -39,7 +39,7 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
 
     // const tasks = filterTasks(toDoList.filter)
     const tasks = tasksFromStore
-    console.log(tasks)
+
     const changeFilterTypeToAll = useCallback(() => {
         dispatch(ChangeToDoListFilter(toDoListID, "all"))
     }, [toDoListID, dispatch])
@@ -51,7 +51,6 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
     }, [toDoListID, dispatch])
 
     const addTask = useCallback((title: string) => {
-        // dispatch(AddNewTask(toDoListID, title))
         dispatch(AddNewTaskTC(toDoListID, title))
     }, [toDoListID, dispatch])
 
@@ -60,7 +59,7 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
     }, [toDoListID, dispatch])
 
     const changeToDoListTitle = useCallback((title: string) => {
-        dispatch(updateToDoList(toDoListID, title))
+        dispatch(updateToDoListTC(toDoListID, title))
     }, [toDoListID, dispatch])
 
     return (
@@ -79,7 +78,7 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
                     addItem={addTask}/>
             </div>
             <div>
-                {tasks !== undefined ? tasks.map(t => {
+                {tasks ? tasks.map(t => {
                         return <Task key={t.id} ToDoListID={toDoListID} title={t.title}
                             // isDone={t.isDone}
                                      taskID={t.id}/>
