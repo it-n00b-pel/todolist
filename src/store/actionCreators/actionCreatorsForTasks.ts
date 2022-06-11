@@ -8,11 +8,10 @@ import {
 import {ACTION_TYPE} from "../ENUM/ENUM";
 import {TaskType} from "../../api/ToDoListAPI";
 
-export const AddNewTask = (toDoListID: string, title: string): AddNewTaskAT => {
+export const AddNewTask = (task: TaskType): AddNewTaskAT => {
     return {
         type: ACTION_TYPE.ADD_NEW_TASK,
-        toDoListID,
-        title
+        task,
     }
 }
 export const RemoveTask = (toDoListID: string, taskID: string): RemoveTaskAT => {

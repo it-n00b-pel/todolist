@@ -5,13 +5,12 @@ import {Button, ButtonGroup, IconButton} from "@mui/material";
 import {ChangeToDoListFilter} from "./store/actionCreators/actionCreatorsForToDoList";
 import {EditableSpan} from "./EditableSpan";
 import AddItemForm from "./AddItemForm";
-import {AddNewTask} from "./store/actionCreators/actionCreatorsForTasks";
 import {FilterType} from "./store/actions/ActionsForToDoList";
 import s from "./ToDoListStyle.module.css"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import {deleteToDoListTC, updateToDoList} from "./store/reducers/toDoListReducer";
 import Task from "./Task";
-import {fetchTasks} from "./store/reducers/tasksReducer";
+import {AddNewTaskTC, fetchTasks} from "./store/reducers/tasksReducer";
 
 export type ToDoListPropsType = {
     toDoListID: string
@@ -52,7 +51,8 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
     }, [toDoListID, dispatch])
 
     const addTask = useCallback((title: string) => {
-        dispatch(AddNewTask(toDoListID, title))
+        // dispatch(AddNewTask(toDoListID, title))
+        dispatch(AddNewTaskTC(toDoListID, title))
     }, [toDoListID, dispatch])
 
     const removeToDoList = useCallback(() => {
