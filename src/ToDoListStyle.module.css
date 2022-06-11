@@ -1,0 +1,44 @@
+.toDoListTitle {
+    margin: 0;
+    display: flex;
+    font-size: 30px;
+    justify-content: space-between;
+
+    height: 50px;
+}
+.toDoListTitle input {
+    font-size: 24px;
+    width: 250px;
+
+}
+.toDoListTitle p {
+    text-decoration: underline red;
+}
+
+.deleteIcon {
+    color: red;
+    transform: scale(1.5);
+    margin: 5px;
+}
+
+.deleteIcon:hover {
+    position: relative;
+    opacity: 1;
+    transform: scale(1.8); /*вот так*/
+    transition: 300ms;
+}
+.toDoListAddForm {
+    margin: 20px auto 20px;
+
+}
+.toDoListAddForm input{
+    width: 300px;
+    font-size: 30px;
+    padding: 10px;
+    font-weight: 450;
+
+
+}
+.toDoListAddForm button {
+    transform: scale(1.35);
+}
