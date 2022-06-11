@@ -10,6 +10,7 @@ import {ACTION_TYPE} from "../ENUM/ENUM";
 import {AppThunk} from "../store";
 import {toDoListAPI} from "../../api/ToDoListAPI";
 import {AddNewTask, ChangeTitleTask, RemoveTask, SetTasks} from "../actionCreators/actionCreatorsForTasks";
+import {AddNewToDoListAT, RemoveToDoListAT} from "../actions/ActionsForToDoList";
 
 export type ActionTypesForTasks =
     AddNewTaskAT
@@ -17,8 +18,8 @@ export type ActionTypesForTasks =
     | ChangeTaskStatusAT
     | ChangeTaskTitleAT
     | SetTasksAT
-// | AddNewToDoListAT
-// | RemoveToDoListAT
+    | AddNewToDoListAT
+    | RemoveToDoListAT
 
 export const tasksReducer = (state = initialStateTask, action: ActionTypesForTasks): TaskStateType => {
     switch (action.type) {
@@ -51,6 +52,14 @@ export const tasksReducer = (state = initialStateTask, action: ActionTypesForTas
                 })
             }
         }
+        case ACTION_TYPE.ADD_NEW_TODOLIST: {
+            return {...state, [action.toDoList.id]: []}
+        }
+        case ACTION_TYPE.REMOVE_TODOLIST: {
+            const copyState = {...state}
+            delete copyState[action.toDoListID]
+            return copyState
+        }
         default:
             return state
     }
@@ -78,6 +87,6 @@ export const DeleteTaskTC = (toDoListID: string, taskID: string): AppThunk => (d
 }
 export const ChangeTaskTitleTC = (toDoListID: string, taskID: string, title: string): AppThunk => (dispatch) => {
     toDoListAPI.updateTask(toDoListID, taskID, title).then(res => {
-       dispatch(ChangeTitleTask(toDoListID,taskID,title))
+        dispatch(ChangeTitleTask(toDoListID, taskID, title))
     })
 }
