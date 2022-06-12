@@ -27,18 +27,17 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
         dispatch(fetchTasks(toDoListID))
     }, [toDoListID, dispatch])
     const filterTasks = (filter: FilterType) => {
-        // switch (filter) {
-        //     case "active":
-        //         return tasksFromStore.filter(t => !t.isDone)
-        //     case "completed":
-        //         return tasksFromStore.filter(t => t.isDone)
-        //     default :
-        return tasksFromStore
-        // }
+        switch (filter) {
+            case "active":
+                return tasksFromStore.filter(t => !t.isDone)
+            case "completed":
+                return tasksFromStore.filter(t => t.isDone)
+            default :
+                return tasksFromStore
+        }
     }
 
-    // const tasks = filterTasks(toDoList.filter)
-    const tasks = tasksFromStore
+    const tasks = filterTasks(toDoList.filter)
 
     const changeFilterTypeToAll = useCallback(() => {
         dispatch(ChangeToDoListFilter(toDoListID, "all"))
@@ -80,7 +79,7 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
             <div>
                 {tasks ? tasks.map(t => {
                         return <Task key={t.id} ToDoListID={toDoListID} title={t.title}
-                            // isDone={t.isDone}
+                                     isDone={t.isDone}
                                      taskID={t.id}/>
                     })
                     : ""}

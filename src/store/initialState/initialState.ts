@@ -6,8 +6,13 @@ export type ToDoListStateType = ToDoListType & {
 }
 
 export type TaskStateType = {
-    [key: string]: TaskType[],
+    [key: string]: DomainTaskType[],
 }
+
+export type DomainTaskType = TaskType & {
+    isDone: boolean
+}
+
 
 //          ---         INITIAL STATE FOR TODOLIST           ---
 export const initialStateToDoLists: ToDoListStateType[] = [
