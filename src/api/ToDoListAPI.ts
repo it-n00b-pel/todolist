@@ -1,4 +1,5 @@
 import axios, {AxiosResponse} from "axios";
+import {TaskStatus} from "../store/ENUM/ENUM";
 
 const instance = axios.create({
     baseURL: "https://social-network.samuraijs.com/api/1.1/",
@@ -68,8 +69,3 @@ export type TaskType = {
     todoListId: string
 }
 
-export enum TaskStatus {
-    New,
-    InProgress,
-    Completed
-}

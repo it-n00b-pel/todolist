@@ -1,10 +1,12 @@
 import React, {ChangeEvent, memo, useCallback} from "react";
-import {Checkbox, IconButton} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import Checkbox from "@mui/material/Checkbox"
 import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@material-ui/icons";
 import {ChangeTaskStatusTC, ChangeTaskTitleTC, DeleteTaskTC} from "./store/reducers/tasksReducer";
 import {useAppDispatch} from "./store/store";
-import {TaskStatus, TaskType} from "./api/ToDoListAPI";
+import {TaskType} from "./api/ToDoListAPI";
+import {TaskStatus} from "./store/ENUM/ENUM";
 
 export type TaskPropsType = {
     ToDoListID: string

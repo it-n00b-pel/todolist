@@ -16,3 +16,9 @@ export enum ACTION_TYPE {
     SET_TASKS = "SET_TASKS",
 
 }
+
+export enum TaskStatus {
+    New,
+    InProgress,
+    Completed
+}

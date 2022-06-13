@@ -6,9 +6,9 @@ import {
     RemoveTaskAT,
     SetTasksAT
 } from "../actions/ActionsForTasks";
-import {ACTION_TYPE} from "../ENUM/ENUM";
+import {ACTION_TYPE, TaskStatus} from "../ENUM/ENUM";
 import {AppThunk} from "../store";
-import {TaskStatus, TaskType, toDoListAPI} from "../../api/ToDoListAPI";
+import {TaskType, toDoListAPI} from "../../api/ToDoListAPI";
 import {
     AddNewTask,
     ChangeStatusTask,
@@ -113,9 +113,6 @@ export const ChangeTaskTitleTC = (toDoListID: string, taskID: string, title: str
             status: task.status
         }).then(res => dispatch(ChangeTitleTask(toDoListID, taskID, title)))
     }
-    // toDoListAPI.updateTask(toDoListID, taskID, title).then(res => {
-    //     dispatch(ChangeTitleTask(toDoListID, taskID, title))
-    // })
 }
 
 export const ChangeTaskStatusTC = (toDoListID: string, taskID: string, status: TaskStatus): AppThunk => (dispatch, getState) => {
@@ -137,7 +134,4 @@ export const ChangeTaskStatusTC = (toDoListID: string, taskID: string, status: T
             status: status
         }).then(res => dispatch(ChangeStatusTask(toDoListID, taskID, status)))
     }
-    // toDoListAPI.updateTask(toDoListID, taskID, title).then(res => {
-    //     dispatch(ChangeTitleTask(toDoListID, taskID, title))
-    // })
 }

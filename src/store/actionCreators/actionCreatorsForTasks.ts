@@ -5,8 +5,8 @@ import {
     RemoveTaskAT,
     SetTasksAT
 } from "../actions/ActionsForTasks";
-import {ACTION_TYPE} from "../ENUM/ENUM";
-import {TaskStatus, TaskType} from "../../api/ToDoListAPI";
+import {ACTION_TYPE, TaskStatus} from "../ENUM/ENUM";
+import {TaskType} from "../../api/ToDoListAPI";
 
 export const AddNewTask = (task: TaskType): AddNewTaskAT => {
     return {

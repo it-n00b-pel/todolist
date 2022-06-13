@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, memo, useCallback, useState} from "react";
-import {IconButton, TextField} from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 
 type AddItemFormPropsType = {
@@ -26,7 +27,7 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
         if (error !== null) {
             setError(null);
         }
-        if (e.key === 'Enter') {
+        if (e.key === "Enter") {
             addItem();
         }
     }

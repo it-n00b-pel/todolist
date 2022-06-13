@@ -1,7 +1,6 @@
 import React, {memo, useCallback, useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "./store/store";
 import {ToDoListStateType} from "./store/initialState/initialState";
-import {Button, ButtonGroup, IconButton} from "@mui/material";
 import {ChangeToDoListFilter} from "./store/actionCreators/actionCreatorsForToDoList";
 import {EditableSpan} from "./EditableSpan";
 import AddItemForm from "./AddItemForm";
@@ -11,7 +10,10 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import {deleteToDoListTC, updateToDoListTC} from "./store/reducers/toDoListReducer";
 import Task from "./Task";
 import {AddNewTaskTC, fetchTasks} from "./store/reducers/tasksReducer";
-import {TaskStatus} from "./api/ToDoListAPI";
+import {TaskStatus} from "./store/ENUM/ENUM";
+import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
 
 export type ToDoListPropsType = {
     toDoListID: string
@@ -39,7 +41,7 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
     }
 
     const tasks = filterTasks(toDoList.filter)
-    console.log(tasks)
+
     const changeFilterTypeToAll = useCallback(() => {
         dispatch(ChangeToDoListFilter(toDoListID, "all"))
     }, [toDoListID, dispatch])
