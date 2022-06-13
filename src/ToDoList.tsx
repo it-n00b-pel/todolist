@@ -11,6 +11,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import {deleteToDoListTC, updateToDoListTC} from "./store/reducers/toDoListReducer";
 import Task from "./Task";
 import {AddNewTaskTC, fetchTasks} from "./store/reducers/tasksReducer";
+import {TaskStatus} from "./api/ToDoListAPI";
 
 export type ToDoListPropsType = {
     toDoListID: string
@@ -29,16 +30,16 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
     const filterTasks = (filter: FilterType) => {
         switch (filter) {
             case "active":
-                return tasksFromStore.filter(t => !t.isDone)
+                return tasksFromStore.filter(t => t.status === TaskStatus.New)
             case "completed":
-                return tasksFromStore.filter(t => t.isDone)
+                return tasksFromStore.filter(t => t.status === TaskStatus.Completed)
             default :
                 return tasksFromStore
         }
     }
 
     const tasks = filterTasks(toDoList.filter)
-
+    console.log(tasks)
     const changeFilterTypeToAll = useCallback(() => {
         dispatch(ChangeToDoListFilter(toDoListID, "all"))
     }, [toDoListID, dispatch])
@@ -78,9 +79,10 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
             </div>
             <div>
                 {tasks ? tasks.map(t => {
-                        return <Task key={t.id} ToDoListID={toDoListID} title={t.title}
-                                     isDone={t.isDone}
-                                     taskID={t.id}/>
+                        return <Task key={t.id}
+                                     ToDoListID={toDoListID}
+                                     task={t}
+                        />
                     })
                     : ""}
             </div>

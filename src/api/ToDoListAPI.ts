@@ -63,7 +63,13 @@ export type TaskType = {
     order: number
     priority: number
     startDate: null
-    status: number
+    status: TaskStatus
     title: string
     todoListId: string
+}
+
+export enum TaskStatus {
+    New,
+    InProgress,
+    Completed
 }

@@ -10,7 +10,7 @@ export type TaskStateType = {
 }
 
 export type DomainTaskType = TaskType & {
-    isDone: boolean
+
 }
 
 

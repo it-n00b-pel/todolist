@@ -6,7 +6,7 @@ import {
     SetTasksAT
 } from "../actions/ActionsForTasks";
 import {ACTION_TYPE} from "../ENUM/ENUM";
-import {TaskType} from "../../api/ToDoListAPI";
+import {TaskStatus, TaskType} from "../../api/ToDoListAPI";
 
 export const AddNewTask = (task: TaskType): AddNewTaskAT => {
     return {
@@ -29,12 +29,12 @@ export const ChangeTitleTask = (toDoListID: string, taskID: string, title: strin
         title
     }
 }
-export const ChangeStatusTask = (toDoListID: string, taskID: string, isDone: boolean): ChangeTaskStatusAT => {
+export const ChangeStatusTask = (toDoListID: string, taskID: string, status: TaskStatus): ChangeTaskStatusAT => {
     return {
         type: ACTION_TYPE.CHANGE_TASK_STATUS,
         toDoListID,
         taskID,
-        isDone
+        status
     }
 }
 

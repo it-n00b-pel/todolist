@@ -4,12 +4,11 @@ import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@material-ui/icons";
 import {ChangeTaskStatusTC, ChangeTaskTitleTC, DeleteTaskTC} from "./store/reducers/tasksReducer";
 import {useAppDispatch} from "./store/store";
+import {TaskStatus, TaskType} from "./api/ToDoListAPI";
 
 export type TaskPropsType = {
     ToDoListID: string
-    taskID: string,
-    title: string
-    isDone?: boolean,
+    task: TaskType
 }
 
 const Task = memo((props: TaskPropsType) => {
@@ -17,22 +16,23 @@ const Task = memo((props: TaskPropsType) => {
     const dispatch = useAppDispatch();
 
     const changeTitleTask = useCallback((title: string) => {
-        dispatch(ChangeTaskTitleTC(props.ToDoListID, props.taskID, title))
-    }, [dispatch, props.ToDoListID, props.taskID])
+        dispatch(ChangeTaskTitleTC(props.ToDoListID, props.task.id, title))
+    }, [dispatch, props.ToDoListID, props.task.id])
     const deleteTask = useCallback(() => {
-        dispatch(DeleteTaskTC(props.ToDoListID, props.taskID))
-    }, [dispatch, props.ToDoListID, props.taskID])
+        dispatch(DeleteTaskTC(props.ToDoListID, props.task.id))
+    }, [dispatch, props.ToDoListID, props.task.id])
     const changeStatusTask = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-       dispatch( ChangeTaskStatusTC(props.ToDoListID, props.taskID, e.currentTarget.checked))
-    }, [dispatch, props.ToDoListID, props.taskID])
+        const newTaskStatus = e.currentTarget.checked
+        dispatch(ChangeTaskStatusTC(props.ToDoListID, props.task.id, newTaskStatus ? TaskStatus.Completed : TaskStatus.New))
+    }, [dispatch, props.ToDoListID, props.task.id])
     return (
         <div style={{display: "flex"}}>
             <Checkbox
-                checked={props.isDone}
+                checked={props.task.status === TaskStatus.Completed}
                 color="primary"
                 onChange={changeStatusTask}
             />
-            <EditableSpan value={props.title} onChange={changeTitleTask}/>
+            <EditableSpan value={props.task.title} onChange={changeTitleTask}/>
             <IconButton onClick={deleteTask}>
                 <Delete/>
             </IconButton>

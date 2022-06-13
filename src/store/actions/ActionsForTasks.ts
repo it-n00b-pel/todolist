@@ -1,5 +1,5 @@
 import {ACTION_TYPE} from "../ENUM/ENUM";
-import {TaskType} from "../../api/ToDoListAPI";
+import {TaskStatus, TaskType} from "../../api/ToDoListAPI";
 
 export type AddNewTaskAT = {
     type: ACTION_TYPE.ADD_NEW_TASK,
@@ -20,7 +20,7 @@ export type ChangeTaskStatusAT = {
     type: ACTION_TYPE.CHANGE_TASK_STATUS,
     toDoListID: string,
     taskID: string,
-    isDone: boolean,
+    status: TaskStatus,
 }
 
 export type SetTasksAT = {
