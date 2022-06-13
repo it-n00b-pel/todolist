@@ -1,19 +1,19 @@
-import React, {memo, useCallback, useEffect} from "react";
-import {useAppDispatch, useAppSelector} from "./store/store";
-import {ToDoListStateType} from "./store/initialState/initialState";
-import {ChangeToDoListFilter} from "./store/actionCreators/actionCreatorsForToDoList";
-import {EditableSpan} from "./EditableSpan";
-import AddItemForm from "./AddItemForm";
-import {FilterType} from "./store/actions/ActionsForToDoList";
-import s from "./ToDoListStyle.module.css"
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import {deleteToDoListTC, updateToDoListTC} from "./store/reducers/toDoListReducer";
-import Task from "./Task";
-import {AddNewTaskTC, fetchTasks} from "./store/reducers/tasksReducer";
-import {TaskStatus} from "./store/ENUM/ENUM";
-import IconButton from "@mui/material/IconButton";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
+import React, {memo, useCallback, useEffect} from 'react';
+import {useAppDispatch, useAppSelector} from './store/store';
+import {ToDoListStateType} from './store/initialState/initialState';
+import {ChangeToDoListFilter} from './store/actionCreators/actionCreatorsForToDoList';
+import {EditableSpan} from './EditableSpan';
+import AddItemForm from './AddItemForm';
+import {FilterType} from './store/actions/ActionsForToDoList';
+import s from './ToDoListStyle.module.css';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import {deleteToDoListTC, updateToDoListTC} from './store/reducers/toDoListReducer';
+import Task from './Task';
+import {AddNewTaskTC, fetchTasks} from './store/reducers/tasksReducer';
+import {TaskStatus} from './store/ENUM/ENUM';
+import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 export type ToDoListPropsType = {
     toDoListID: string
@@ -66,6 +66,7 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
 
     return (
         <div>
+
             <h2 className={s.toDoListTitle}>
                 <EditableSpan value={toDoList.title}
                               onChange={changeToDoListTitle}/>
@@ -86,7 +87,7 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
                                      task={t}
                         />
                     })
-                    : ""}
+                    : null}
             </div>
 
             <ButtonGroup variant="contained" aria-label="outlined button group" style={{marginTop: "20px"}}>
