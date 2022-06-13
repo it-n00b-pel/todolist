@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 
 const instance = axios.create({
     baseURL: "https://social-network.samuraijs.com/api/1.1/",
@@ -13,29 +13,41 @@ export const toDoListAPI = {
         return instance.get<ToDoListType[]>("todo-lists");
     },
     deleteToDoList(toDoListID: string) {
-        return instance.delete(`todo-lists/${toDoListID}`)
+        return instance.delete<AxiosResponse<ResponseType>>(`todo-lists/${toDoListID}`)
     },
     addNewToDoList(title: string) {
-        return instance.post(`todo-lists`, {title})
+        return instance.post<ResponseType<{ item: ToDoListType }>>(`todo-lists`, {title})
     },
     updateToDoList(toDoListID: string, title: string) {
-        return instance.put(`todo-lists/${toDoListID}`, {title})
+        return instance.put<ResponseType<{ item: ToDoListType }>>(`todo-lists/${toDoListID}`, {title})
     },
     getTasks(toDoListID: string) {
-        return instance.get(`todo-lists/${toDoListID}/tasks`)
+        return instance.get<GetTaskResponse>(`todo-lists/${toDoListID}/tasks`)
     },
     addNewTask(toDoListID: string, title: string) {
-        return instance.post(`todo-lists/${toDoListID}/tasks`, {title})
+        return instance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${toDoListID}/tasks`, {title})
     },
     deleteTask(toDoListID: string, taskID: string) {
-        return instance.delete(`todo-lists/${toDoListID}/tasks/${taskID}`)
+        return instance.delete<ResponseType>(`todo-lists/${toDoListID}/tasks/${taskID}`)
     },
-    updateTask(toDoListID: string, taskID: string, task: TaskType){
-    return instance.put(`todo-lists/${toDoListID}/tasks/${taskID}/`, task)
+    updateTask(toDoListID: string, taskID: string, task: TaskType) {
+        return instance.put<ResponseType<{ item: TaskType }>>(`todo-lists/${toDoListID}/tasks/${taskID}/`, task)
     }
 
 }
 
+export type ResponseType<T = {}> = {
+    resultCode: number
+    messages: Array<string>
+    fieldsErrors: Array<string>
+    data: T
+}
+
+type GetTaskResponse = {
+    items: TaskType[],
+    totalCount: number
+    error: null
+}
 export type ToDoListType = {
     id: string,
     addedDate: string,
