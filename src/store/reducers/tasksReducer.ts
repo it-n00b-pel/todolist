@@ -1,22 +1,22 @@
-import {DomainTaskType, initialStateTask, TaskStateType} from "../initialState/initialState";
+import {DomainTaskType, initialStateTask, TaskStateType} from '../initialState/initialState';
 import {
     AddNewTaskAT,
     ChangeTaskStatusAT,
     ChangeTaskTitleAT,
-    RemoveTaskAT,
+    RemoveTaskAT, SetEntityTaskStatusAT,
     SetTasksAT
-} from "../actions/ActionsForTasks";
-import {ACTION_TYPE, TaskStatus} from "../ENUM/ENUM";
-import {AppThunk} from "../store";
-import {TaskType, toDoListAPI} from "../../api/ToDoListAPI";
+} from '../actions/ActionsForTasks';
+import {ACTION_TYPE, TaskStatus} from '../ENUM/ENUM';
+import {AppThunk} from '../store';
+import {TaskType, toDoListAPI} from '../../api/ToDoListAPI';
 import {
     AddNewTask,
     ChangeStatusTask,
     ChangeTitleTask,
-    RemoveTask,
+    RemoveTask, SetEntityTaskStatus,
     SetTasks
-} from "../actionCreators/actionCreatorsForTasks";
-import {AddNewToDoListAT, RemoveToDoListAT} from "../actions/ActionsForToDoList";
+} from '../actionCreators/actionCreatorsForTasks';
+import {AddNewToDoListAT, RemoveToDoListAT} from '../actions/ActionsForToDoList';
 import {SetPreloaderStatusAC} from './appPreloaderReducer';
 
 export type ActionTypesForTasks =
@@ -27,17 +27,18 @@ export type ActionTypesForTasks =
     | SetTasksAT
     | AddNewToDoListAT
     | RemoveToDoListAT
+    | SetEntityTaskStatusAT
 
 export const tasksReducer = (state = initialStateTask, action: ActionTypesForTasks): TaskStateType => {
     switch (action.type) {
         case ACTION_TYPE.ADD_NEW_TASK:
-            const newTask: DomainTaskType = {...action.task}
+            const newTask: DomainTaskType = {...action.task, entityStatus: 'idle'};
 
             return {
                 ...state, [action.task.todoListId]: [newTask, ...state[action.task.todoListId]]
-            }
+            };
         case ACTION_TYPE.REMOVE_TASK:
-            return {...state, [action.toDoListID]: state[action.toDoListID].filter(task => task.id !== action.taskID)}
+            return {...state, [action.toDoListID]: state[action.toDoListID].filter(task => task.id !== action.taskID)};
         case ACTION_TYPE.CHANGE_TASK_TITLE:
             return {
                 ...state,
@@ -45,7 +46,7 @@ export const tasksReducer = (state = initialStateTask, action: ActionTypesForTas
                     ...task,
                     title: action.title
                 } : task)
-            }
+            };
         case ACTION_TYPE.CHANGE_TASK_STATUS:
             return {
                 ...state,
@@ -53,60 +54,73 @@ export const tasksReducer = (state = initialStateTask, action: ActionTypesForTas
                     ...task,
                     status: action.status
                 } : task)
-            }
+            };
         case ACTION_TYPE.SET_TASKS: {
             return {
                 ...state, [action.toDoListID]: action.tasks.map(t => {
-                    return {...t, isDone: t.status === 2}
+                    return {...t, entityStatus: 'idle'};
                 })
-            }
+            };
         }
         case ACTION_TYPE.ADD_NEW_TODOLIST: {
-            return {...state, [action.toDoList.id]: []}
+            return {...state, [action.toDoList.id]: []};
         }
         case ACTION_TYPE.REMOVE_TODOLIST: {
-            const copyState = {...state}
-            delete copyState[action.toDoListID]
-            return copyState
+            const copyState = {...state};
+            delete copyState[action.toDoListID];
+            return copyState;
+        }
+        case ACTION_TYPE.SET_ENTITY_STATUS_TASK: {
+            return {
+                ...state,
+                [action.toDoListID]: state[action.toDoListID].map(t => t.id === action.taskID ? {
+                    ...t,
+                    entityStatus: action.entityStatus
+                } : t)
+            };
         }
         default:
-            return state
+            return state;
     }
-}
+};
 
 //          ---         THUNK FOR TASKS           ---
 
 export const fetchTasks = (toDoListID: string): AppThunk => (dispatch) => {
-    dispatch(SetPreloaderStatusAC('loading'))
+    dispatch(SetPreloaderStatusAC('loading'));
     toDoListAPI.getTasks(toDoListID).then(res => {
-        const tasks = res.data.items
-        dispatch(SetTasks(toDoListID, tasks))
-        dispatch(SetPreloaderStatusAC('succeeded'))
-    })
-}
+        const tasks = res.data.items;
+        dispatch(SetTasks(toDoListID, tasks));
+        dispatch(SetPreloaderStatusAC('succeeded'));
+    });
+};
 export const AddNewTaskTC = (toDoListID: string, title: string): AppThunk => (dispatch) => {
-    dispatch(SetPreloaderStatusAC('loading'))
+    dispatch(SetPreloaderStatusAC('loading'));
     toDoListAPI.addNewTask(toDoListID, title).then(res => {
-        const newTask = res.data.data.item
-        dispatch(AddNewTask(newTask))
-        dispatch(SetPreloaderStatusAC('succeeded'))
-    })
-}
+        if (res.data.resultCode === 0) {
+            const newTask = res.data.data.item;
+            dispatch(AddNewTask(newTask));
+            dispatch(SetPreloaderStatusAC('succeeded'));
+        }
+    });
+};
 
 export const DeleteTaskTC = (toDoListID: string, taskID: string): AppThunk => (dispatch) => {
-    dispatch(SetPreloaderStatusAC('loading'))
+    dispatch(SetPreloaderStatusAC('loading'));
+    dispatch(SetEntityTaskStatus(toDoListID, taskID, 'loading'));
     toDoListAPI.deleteTask(toDoListID, taskID).then(res => {
-        dispatch(RemoveTask(toDoListID, taskID))
-        dispatch(SetPreloaderStatusAC('succeeded'))
-    })
-}
+        dispatch(RemoveTask(toDoListID, taskID));
+        dispatch(SetPreloaderStatusAC('succeeded'));
+        dispatch(SetEntityTaskStatus(toDoListID, taskID, 'succeeded'));
+    });
+};
 export const ChangeTaskTitleTC = (toDoListID: string, taskID: string, title: string): AppThunk => (dispatch, getState) => {
     const allTasks = getState().tasks;
-    const tasksForCurrentToDoList = allTasks[toDoListID]
-    const task: TaskType | undefined = tasksForCurrentToDoList.find(t => t.id === taskID)
+    const tasksForCurrentToDoList = allTasks[toDoListID];
+    const task: TaskType | undefined = tasksForCurrentToDoList.find(t => t.id === taskID);
 
     if (task) {
-        dispatch(SetPreloaderStatusAC('loading'))
+        dispatch(SetPreloaderStatusAC('loading'));
         toDoListAPI.updateTask(toDoListID, taskID, {
             title: title,
             todoListId: task.todoListId,
@@ -120,18 +134,19 @@ export const ChangeTaskTitleTC = (toDoListID: string, taskID: string, title: str
             status: task.status
         }).then(res => {
             dispatch(ChangeTitleTask(toDoListID, taskID, title));
-            dispatch(SetPreloaderStatusAC('succeeded'))
-        })
+            dispatch(SetPreloaderStatusAC('succeeded'));
+        });
     }
-}
+};
 
 export const ChangeTaskStatusTC = (toDoListID: string, taskID: string, status: TaskStatus): AppThunk => (dispatch, getState) => {
     const allTasks = getState().tasks;
-    const tasksForCurrentToDoList = allTasks[toDoListID]
-    const task: TaskType | undefined = tasksForCurrentToDoList.find(t => t.id === taskID)
+    const tasksForCurrentToDoList = allTasks[toDoListID];
+    const task: TaskType | undefined = tasksForCurrentToDoList.find(t => t.id === taskID);
 
     if (task) {
-        dispatch(SetPreloaderStatusAC('loading'))
+        dispatch(SetPreloaderStatusAC('loading'));
+        dispatch(SetEntityTaskStatus(toDoListID, taskID, 'loading'));
         toDoListAPI.updateTask(toDoListID, taskID, {
             title: task.title,
             todoListId: task.todoListId,
@@ -145,7 +160,8 @@ export const ChangeTaskStatusTC = (toDoListID: string, taskID: string, status: T
             status: status
         }).then(res => {
             dispatch(ChangeStatusTask(toDoListID, taskID, status));
-            dispatch(SetPreloaderStatusAC('succeeded'))
-        })
+            dispatch(SetPreloaderStatusAC('succeeded'));
+            dispatch(SetEntityTaskStatus(toDoListID, taskID, 'succeeded'));
+        });
     }
-}
+};

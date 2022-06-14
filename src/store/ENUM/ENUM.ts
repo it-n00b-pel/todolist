@@ -14,6 +14,7 @@ export enum ACTION_TYPE {
     CHANGE_TASK_TITLE = 'CHANGE-TASK-TITLE',
     CHANGE_TASK_STATUS = 'CHANGE-TASK-STATUS',
     SET_TASKS = 'SET_TASKS',
+    SET_ENTITY_STATUS_TASK = 'SET_ENTITY_STATUS_TASK',
 
     //          ---         ACTION TYPES FOR APP LOADER           ---
 
@@ -22,6 +23,6 @@ export enum ACTION_TYPE {
 }
 
 export enum TaskStatus {
-    New=0,
-    Completed=2,
+    New = 0,
+    Completed = 2,
 }

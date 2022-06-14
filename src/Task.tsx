@@ -5,13 +5,13 @@ import {EditableSpan} from './EditableSpan';
 import {Delete} from '@material-ui/icons';
 import {ChangeTaskStatusTC, ChangeTaskTitleTC, DeleteTaskTC} from './store/reducers/tasksReducer';
 import {useAppDispatch} from './store/store';
-import {TaskType} from './api/ToDoListAPI';
 import {TaskStatus} from './store/ENUM/ENUM';
 import CircularProgress from '@mui/material/CircularProgress';
+import {DomainTaskType} from './store/initialState/initialState';
 
 export type TaskPropsType = {
     ToDoListID: string
-    task: TaskType
+    task: DomainTaskType
 }
 
 const Task = memo((props: TaskPropsType) => {
@@ -29,15 +29,20 @@ const Task = memo((props: TaskPropsType) => {
         dispatch(ChangeTaskStatusTC(props.ToDoListID, props.task.id, newTaskStatus ? TaskStatus.Completed : TaskStatus.New));
     }, [dispatch, props.ToDoListID, props.task.id]);
     return (
-        <div style={{display: 'flex', fontSize: '22px', fontWeight:"600", alignItems:"center"}}>
-            <CircularProgress color="inherit" size={18} />
-            <Checkbox
-                checked={props.task.status === TaskStatus.Completed}
-                color="primary"
-                onChange={changeStatusTask}
-            />
+        <div style={{display: 'flex', fontSize: '22px', fontWeight: '600', alignItems: 'center'}}>
+            {props.task.entityStatus === 'loading' ?
+                <CircularProgress style={{margin: '12px'}} color="inherit" size={18}/>
+                :
+                <Checkbox
+                    checked={props.task.status === TaskStatus.Completed}
+                    color="primary"
+                    onChange={changeStatusTask}
+                />
+            }
+
+
             <EditableSpan value={props.task.title} onChange={changeTitleTask}/>
-            <IconButton onClick={deleteTask}>
+            <IconButton onClick={deleteTask} disabled={props.task.entityStatus === 'loading'}>
                 <Delete/>
             </IconButton>
         </div>

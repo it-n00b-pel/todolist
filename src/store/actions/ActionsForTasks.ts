@@ -1,5 +1,6 @@
-import {ACTION_TYPE, TaskStatus} from "../ENUM/ENUM";
-import {TaskType} from "../../api/ToDoListAPI";
+import {ACTION_TYPE, TaskStatus} from '../ENUM/ENUM';
+import {TaskType} from '../../api/ToDoListAPI';
+import {RequestStatusType} from '../reducers/appPreloaderReducer';
 
 export type AddNewTaskAT = {
     type: ACTION_TYPE.ADD_NEW_TASK,
@@ -27,6 +28,12 @@ export type SetTasksAT = {
     type: ACTION_TYPE.SET_TASKS,
     toDoListID: string,
     tasks: Array<TaskType>
+}
+export type SetEntityTaskStatusAT = {
+    type: ACTION_TYPE.SET_ENTITY_STATUS_TASK,
+    entityStatus: RequestStatusType,
+    toDoListID: string,
+    taskID: string,
 }
 
 

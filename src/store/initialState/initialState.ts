@@ -1,5 +1,6 @@
 import {FilterType} from "../actions/ActionsForToDoList";
 import {TaskType, ToDoListType} from "../../api/ToDoListAPI";
+import {RequestStatusType} from '../reducers/appPreloaderReducer';
 
 export type ToDoListStateType = ToDoListType & {
     filter: FilterType,
@@ -9,7 +10,9 @@ export type TaskStateType = {
     [key: string]: DomainTaskType[],
 }
 
-export type DomainTaskType = TaskType & {}
+export type DomainTaskType = TaskType & {
+    entityStatus: RequestStatusType
+}
 
 //          ---         INITIAL STATE FOR TODOLIST           ---
 export const initialStateToDoLists: ToDoListStateType[] = [
