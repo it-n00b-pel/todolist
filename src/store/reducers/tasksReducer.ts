@@ -18,6 +18,7 @@ import {
 } from '../actionCreators/actionCreatorsForTasks';
 import {AddNewToDoListAT, RemoveToDoListAT} from '../actions/ActionsForToDoList';
 import {SetPreloaderStatusAC} from './appPreloaderReducer';
+import {SetEntityStatusToDoList} from '../actionCreators/actionCreatorsForToDoList';
 
 export type ActionTypesForTasks =
     AddNewTaskAT
@@ -95,12 +96,14 @@ export const fetchTasks = (toDoListID: string): AppThunk => (dispatch) => {
     });
 };
 export const AddNewTaskTC = (toDoListID: string, title: string): AppThunk => (dispatch) => {
+    dispatch(SetEntityStatusToDoList(toDoListID, 'loading'));
     dispatch(SetPreloaderStatusAC('loading'));
     toDoListAPI.addNewTask(toDoListID, title).then(res => {
         if (res.data.resultCode === 0) {
             const newTask = res.data.data.item;
             dispatch(AddNewTask(newTask));
             dispatch(SetPreloaderStatusAC('succeeded'));
+            dispatch(SetEntityStatusToDoList(toDoListID, 'succeeded'));
         }
     });
 };

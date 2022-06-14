@@ -14,8 +14,7 @@
 .todoPaper {
     background: linear-gradient( #bbb, transparent 1px), linear-gradient( 90deg, #bbb, transparent 1px);
     background-size: 10px 10px;
-    background-position: center center;
-    width: 360px;
+    width: 380px;
 }
 .toDoListTitle {
     margin: 0;

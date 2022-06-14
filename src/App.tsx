@@ -27,11 +27,8 @@ function App() {
                 {isLoading === 'loading' && <LinearProgress color="inherit"/>}
             </div>
             <div className="App">
-
                 <AddItemForm addItem={addNewToDoList}/>
-
                 <Grid container spacing={3}>
-
                     {toDoLists.map((t) => {
                         return <Grid item key={t.id}>
                             <Paper className={'todoPaper'} elevation={8}

@@ -4,7 +4,8 @@ import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 
 type AddItemFormPropsType = {
-    addItem: (title: string) => void
+    addItem: (title: string) => void,
+    disabled?: boolean
 }
 
 export const AddItemForm = memo((props: AddItemFormPropsType) => {
@@ -42,9 +43,10 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
                 onKeyDown={onKeyPressHandler}
                 label="Task"
                 helperText={error}
-
+                style={{backgroundColor:"AppWorkspace"}}
+                disabled={props.disabled}
             />
-            <IconButton className="addBtn" onClick={addItem}>
+            <IconButton className="addBtn" onClick={addItem} disabled={props.disabled}>
                 <AddIcon style={{backgroundColor: '#2164f1', color: '#FFFFFF'}}/>
             </IconButton>
         </div>

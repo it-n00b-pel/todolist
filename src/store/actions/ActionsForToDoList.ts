@@ -1,5 +1,6 @@
 import {ACTION_TYPE} from "../ENUM/ENUM";
 import {ToDoListType} from "../../api/ToDoListAPI";
+import {RequestStatusType} from '../reducers/appPreloaderReducer';
 
 export type FilterType = "all" | "completed" | "active"
 
@@ -25,4 +26,9 @@ export type ChangeFilterToDoListAT = {
 export type SetToDoListsAT = {
     type: ACTION_TYPE.SET_TODOLISTS,
     toDoLists: ToDoListType[],
+}
+export type SetEntityStatusToDoListAT = {
+    type: ACTION_TYPE.SET_ENTITY_STATUS_TODOLIST,
+    entityStatus: RequestStatusType,
+    toDoListID: string,
 }

@@ -1,9 +1,10 @@
-import {FilterType} from "../actions/ActionsForToDoList";
-import {TaskType, ToDoListType} from "../../api/ToDoListAPI";
+import {FilterType} from '../actions/ActionsForToDoList';
+import {TaskType, ToDoListType} from '../../api/ToDoListAPI';
 import {RequestStatusType} from '../reducers/appPreloaderReducer';
 
 export type ToDoListStateType = ToDoListType & {
     filter: FilterType,
+    entityStatus: RequestStatusType,
 }
 
 export type TaskStateType = {
@@ -30,7 +31,7 @@ export const initialStateToDoLists: ToDoListStateType[] = [
     //     "order": -7,
     //     filter: "all"
     // }
-]
+];
 
 //          ---         INITIAL STATE FOR TASK           ---
 export const initialStateTask: TaskStateType = {
@@ -78,4 +79,4 @@ export const initialStateTask: TaskStateType = {
     //         title: "222df",
     //         todoListId: "063214e7-b827-45df-9af4-788a808c13e4"}
     // ],
-}
+};

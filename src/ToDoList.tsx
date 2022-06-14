@@ -21,49 +21,49 @@ export type ToDoListPropsType = {
 }
 
 export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
-    console.log("TODOLIST")
+    console.log('TODOLIST');
     const dispatch = useAppDispatch();
 
     let tasksFromStore = useAppSelector(state => state.tasks[toDoListID]);
 
     useEffect(() => {
-        dispatch(fetchTasks(toDoListID))
-    }, [toDoListID, dispatch])
+        dispatch(fetchTasks(toDoListID));
+    }, [toDoListID, dispatch]);
     const filterTasks = (filter: FilterType) => {
         switch (filter) {
-            case "active":
-                return tasksFromStore.filter(t => t.status === TaskStatus.New)
-            case "completed":
-                return tasksFromStore.filter(t => t.status === TaskStatus.Completed)
+            case 'active':
+                return tasksFromStore.filter(t => t.status === TaskStatus.New);
+            case 'completed':
+                return tasksFromStore.filter(t => t.status === TaskStatus.Completed);
             default :
-                return tasksFromStore
+                return tasksFromStore;
         }
-    }
+    };
 
-    const tasks = filterTasks(toDoList.filter)
+    const tasks = filterTasks(toDoList.filter);
 
     const changeFilterTypeToAll = useCallback(() => {
-        dispatch(ChangeToDoListFilter(toDoListID, "all"))
-    }, [toDoListID, dispatch])
+        dispatch(ChangeToDoListFilter(toDoListID, 'all'));
+    }, [toDoListID, dispatch]);
     const changeFilterTypeToCompleted = useCallback(() => {
-        dispatch(ChangeToDoListFilter(toDoListID, "completed"))
-    }, [toDoListID, dispatch])
+        dispatch(ChangeToDoListFilter(toDoListID, 'completed'));
+    }, [toDoListID, dispatch]);
     const changeFilterTypeToActive = useCallback(() => {
-        dispatch(ChangeToDoListFilter(toDoListID, "active"))
-    }, [toDoListID, dispatch])
+        dispatch(ChangeToDoListFilter(toDoListID, 'active'));
+    }, [toDoListID, dispatch]);
 
     const addTask = useCallback((title: string) => {
-        dispatch(AddNewTaskTC(toDoListID, title))
-    }, [toDoListID, dispatch])
+        dispatch(AddNewTaskTC(toDoListID, title));
+    }, [toDoListID, dispatch]);
 
     const removeToDoList = useCallback(() => {
-        dispatch(deleteToDoListTC(toDoListID))
-    }, [toDoListID, dispatch])
+        dispatch(deleteToDoListTC(toDoListID));
+    }, [toDoListID, dispatch]);
 
     const changeToDoListTitle = useCallback((title: string) => {
-        dispatch(updateToDoListTC(toDoListID, title))
-    }, [toDoListID, dispatch])
-
+        dispatch(updateToDoListTC(toDoListID, title));
+    }, [toDoListID, dispatch]);
+// TODO add entity status for button 'delete' and AddItemForm
     return (
         <div>
 
@@ -71,32 +71,36 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
                 <EditableSpan value={toDoList.title}
                               onChange={changeToDoListTitle}/>
 
-                <IconButton onClick={removeToDoList}>
+                <IconButton onClick={removeToDoList} disabled={toDoList.entityStatus === 'loading'}>
                     <DeleteOutlineIcon className={s.deleteIcon}/>
                 </IconButton>
             </h2>
 
             <div className={s.toDoListAddForm}>
                 <AddItemForm
-                    addItem={addTask}/>
+                    addItem={addTask}
+                    disabled={toDoList.entityStatus === 'loading'}
+                />
             </div>
             <div>
                 {tasks ? tasks.map(t => {
                         return <Task key={t.id}
                                      ToDoListID={toDoListID}
                                      task={t}
-                        />
+                        />;
                     })
                     : null}
             </div>
 
-            <ButtonGroup variant="contained" aria-label="outlined button group" style={{marginTop: "20px"}}>
-                <Button color={"inherit"} onClick={changeFilterTypeToAll}>All</Button>
-                <Button color={"success"} onClick={changeFilterTypeToCompleted}>Completed</Button>
-                <Button color={"error"} onClick={changeFilterTypeToActive}>Active</Button>
+            <ButtonGroup variant="contained" aria-label="outlined button group"
+                         style={{marginTop: '20px', width: '100%'}}>
+                <Button style={{width: '33%'}} color={'inherit'} onClick={changeFilterTypeToAll}>All</Button>
+                <Button style={{width: '33%'}} color={'success'}
+                        onClick={changeFilterTypeToCompleted}>Completed</Button>
+                <Button style={{width: '33%'}} color={'error'} onClick={changeFilterTypeToActive}>Active</Button>
             </ButtonGroup>
         </div>
     );
-})
+});
 
 export default ToDoList;
