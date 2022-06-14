@@ -11,7 +11,9 @@ import {ErrorSnackbar} from './components/ErrorSnackbar';
 function App() {
     console.log('APP');
     let toDoLists = useAppSelector(state => state.toDoLists);
-    const isLoading = useAppSelector(state => state.preloader.status);
+    const isLoading = useAppSelector(state => state.app.status);
+    const error = useAppSelector(state => state.app.error)
+
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -28,7 +30,7 @@ function App() {
                 {isLoading === 'loading' && <LinearProgress color="inherit"/>}
             </div>
             <div className="App">
-                <ErrorSnackbar/>
+                {error && <ErrorSnackbar error={error}/>}
                 <AddItemForm addItem={addNewToDoList}/>
                 <Grid container spacing={3}>
                     {toDoLists.map((t) => {

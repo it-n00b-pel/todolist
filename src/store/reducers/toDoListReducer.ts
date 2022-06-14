@@ -15,7 +15,7 @@ import {
     SetToDoLists
 } from '../actionCreators/actionCreatorsForToDoList';
 import {AppThunk} from '../store';
-import {SetPreloaderStatusAC} from './appPreloaderReducer';
+import {SetAppErrorAC, SetPreloaderStatusAC} from './appReducer';
 
 export type ActionTypesForToDoLists =
     AddNewToDoListAT
@@ -68,8 +68,19 @@ export const fetchToDoListsTC = (): AppThunk => {
 export const addNewToDoListTC = (title: string): AppThunk => (dispatch) => {
     dispatch(SetPreloaderStatusAC('loading'));
     toDoListAPI.addNewToDoList(title).then(res => {
-        dispatch(AddNewToDoList(res.data.data.item));
-        dispatch(SetPreloaderStatusAC('succeeded'));
+        if (res.data.resultCode === 0) {
+            dispatch(AddNewToDoList(res.data.data.item));
+            dispatch(SetPreloaderStatusAC('succeeded'));
+        }else {
+            if (res.data.messages.length) {
+                dispatch(SetAppErrorAC(res.data.messages[0]))
+            } else {
+                dispatch(SetAppErrorAC('Some error occurred'))
+            }
+            dispatch(SetPreloaderStatusAC('failed'))
+
+        }
+
     });
 
 };

@@ -1,6 +1,6 @@
 import {ACTION_TYPE} from "../ENUM/ENUM";
 import {ToDoListType} from "../../api/ToDoListAPI";
-import {RequestStatusType} from '../reducers/appPreloaderReducer';
+import {RequestStatusType} from '../reducers/appReducer';
 
 export type FilterType = "all" | "completed" | "active"
 

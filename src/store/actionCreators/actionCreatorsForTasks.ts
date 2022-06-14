@@ -8,7 +8,7 @@ import {
 } from '../actions/ActionsForTasks';
 import {ACTION_TYPE, TaskStatus} from '../ENUM/ENUM';
 import {TaskType} from '../../api/ToDoListAPI';
-import {RequestStatusType} from '../reducers/appPreloaderReducer';
+import {RequestStatusType} from '../reducers/appReducer';
 
 export const AddNewTask = (task: TaskType): AddNewTaskAT => {
     return {

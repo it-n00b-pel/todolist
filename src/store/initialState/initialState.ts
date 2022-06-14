@@ -1,6 +1,6 @@
 import {FilterType} from '../actions/ActionsForToDoList';
 import {TaskType, ToDoListType} from '../../api/ToDoListAPI';
-import {RequestStatusType} from '../reducers/appPreloaderReducer';
+import {RequestStatusType} from '../reducers/appReducer';
 
 export type ToDoListStateType = ToDoListType & {
     filter: FilterType,

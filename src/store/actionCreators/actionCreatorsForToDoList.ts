@@ -8,7 +8,7 @@ import {
 } from '../actions/ActionsForToDoList';
 import {ACTION_TYPE} from '../ENUM/ENUM';
 import {ToDoListType} from '../../api/ToDoListAPI';
-import {RequestStatusType} from '../reducers/appPreloaderReducer';
+import {RequestStatusType} from '../reducers/appReducer';
 
 export const AddNewToDoList = (toDoList: ToDoListType): AddNewToDoListAT => {
     return {

@@ -17,7 +17,7 @@ import {
     SetTasks
 } from '../actionCreators/actionCreatorsForTasks';
 import {AddNewToDoListAT, RemoveToDoListAT} from '../actions/ActionsForToDoList';
-import {SetPreloaderStatusAC} from './appPreloaderReducer';
+import {SetPreloaderStatusAC} from './appReducer';
 import {SetEntityStatusToDoList} from '../actionCreators/actionCreatorsForToDoList';
 
 export type ActionTypesForTasks =

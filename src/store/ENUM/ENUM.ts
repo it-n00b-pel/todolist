@@ -20,7 +20,7 @@ export enum ACTION_TYPE {
     //          ---         ACTION TYPES FOR APP LOADER           ---
 
     SET_PRELOADER_STATUS = 'SET_PRELOADER_STATUS',
-
+    SET_APP_ERROR = 'SET_APP_ERROR',
 }
 
 export enum TaskStatus {
