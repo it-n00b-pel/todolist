@@ -3,11 +3,11 @@ import IconButton from '@mui/material/IconButton';
 import Checkbox from '@mui/material/Checkbox';
 import {EditableSpan} from './EditableSpan';
 import {Delete} from '@material-ui/icons';
-import {ChangeTaskStatusTC, ChangeTaskTitleTC, DeleteTaskTC} from './store/reducers/tasksReducer';
-import {useAppDispatch} from './store/store';
-import {TaskStatus} from './store/ENUM/ENUM';
+import {ChangeTaskStatusTC, ChangeTaskTitleTC, DeleteTaskTC} from '../store/reducers/tasksReducer';
+import {useAppDispatch} from '../store/store';
+import {TaskStatus} from '../store/ENUM/ENUM';
 import CircularProgress from '@mui/material/CircularProgress';
-import {DomainTaskType} from './store/initialState/initialState';
+import {DomainTaskType} from '../store/initialState/initialState';
 
 export type TaskPropsType = {
     ToDoListID: string

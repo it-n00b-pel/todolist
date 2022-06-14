@@ -1,8 +1,8 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
-import AddItemForm from './AddItemForm';
+import AddItemForm from './components/AddItemForm';
 import {useAppDispatch, useAppSelector} from './store/store';
-import ToDoList from './ToDoList';
+import ToDoList from './components/ToDoList';
 import {Grid, Paper} from '@mui/material';
 import {addNewToDoListTC, fetchToDoListsTC} from './store/reducers/toDoListReducer';
 import LinearProgress from '@mui/material/LinearProgress';
