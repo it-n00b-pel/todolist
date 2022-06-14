@@ -171,7 +171,7 @@ export const ChangeTaskStatusTC = (toDoListID: string, taskID: string, status: T
             status: status
         }).then(res => {
             dispatch(ChangeStatusTask(toDoListID, taskID, status));
-            dispatch(SetPreloaderStatusAC('succeeded'));
+                dispatch(SetPreloaderStatusAC('succeeded'));
             dispatch(SetEntityTaskStatus(toDoListID, taskID, 'succeeded'));
         });
     }

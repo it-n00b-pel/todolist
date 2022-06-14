@@ -5,13 +5,13 @@ import {useAppDispatch, useAppSelector} from './store/store';
 import ToDoList from './components/ToDoList';
 import {Grid, Paper} from '@mui/material';
 import {addNewToDoListTC, fetchToDoListsTC} from './store/reducers/toDoListReducer';
-import LinearProgress from '@mui/material/LinearProgress';
 import {ErrorSnackbar} from './components/ErrorSnackbar';
+import AppLoader from './components/AppLoader';
 
 function App() {
     console.log('APP');
     let toDoLists = useAppSelector(state => state.toDoLists);
-    const isLoading = useAppSelector(state => state.app.status);
+    // const isLoading = useAppSelector(state => state.app.status);
     const error = useAppSelector(state => state.app.error);
 
     const dispatch = useAppDispatch();
@@ -26,9 +26,7 @@ function App() {
 
     return (
         <div>
-            <div className={'LinearProgress'}>
-                {isLoading === 'loading' && <LinearProgress color="inherit"/>}
-            </div>
+            <AppLoader/>
             <div className="App">
                 {error && <ErrorSnackbar error={error}/>}
                 <AddItemForm addItem={addNewToDoList}/>

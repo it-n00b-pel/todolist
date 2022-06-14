@@ -45,7 +45,6 @@ export const toDoListReducer = (state = initialStateToDoLists, action: ActionTyp
             return action.toDoLists.map(t => ({...t, filter: 'all', entityStatus: 'idle'}));
         }
         case ACTION_TYPE.SET_ENTITY_STATUS_TODOLIST: {
-            //  debugger
             return [...state].map(t => t.id === action.toDoListID ? {...t, entityStatus: action.entityStatus} : t);
         }
         default :
@@ -102,5 +101,4 @@ export const updateToDoListTC = (toDoListID: string, title: string): AppThunk =>
         dispatch(ChangeToDoListTitle(toDoListID, title));
         dispatch(SetPreloaderStatusAC('succeeded'));
     });
-
 };
