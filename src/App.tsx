@@ -6,6 +6,7 @@ import ToDoList from './components/ToDoList';
 import {Grid, Paper} from '@mui/material';
 import {addNewToDoListTC, fetchToDoListsTC} from './store/reducers/toDoListReducer';
 import LinearProgress from '@mui/material/LinearProgress';
+import {ErrorSnackbar} from './components/ErrorSnackbar';
 
 function App() {
     console.log('APP');
@@ -27,6 +28,7 @@ function App() {
                 {isLoading === 'loading' && <LinearProgress color="inherit"/>}
             </div>
             <div className="App">
+                <ErrorSnackbar/>
                 <AddItemForm addItem={addNewToDoList}/>
                 <Grid container spacing={3}>
                     {toDoLists.map((t) => {
