@@ -22,7 +22,6 @@ export enum ACTION_TYPE {
 }
 
 export enum TaskStatus {
-    New,
-    InProgress,
-    Completed
+    New=0,
+    Completed=2,
 }

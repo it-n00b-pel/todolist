@@ -17,6 +17,7 @@ import {
     SetTasks
 } from "../actionCreators/actionCreatorsForTasks";
 import {AddNewToDoListAT, RemoveToDoListAT} from "../actions/ActionsForToDoList";
+import {SetPreloaderStatusAC} from './appPreloaderReducer';
 
 export type ActionTypesForTasks =
     AddNewTaskAT
@@ -76,21 +77,27 @@ export const tasksReducer = (state = initialStateTask, action: ActionTypesForTas
 //          ---         THUNK FOR TASKS           ---
 
 export const fetchTasks = (toDoListID: string): AppThunk => (dispatch) => {
+    dispatch(SetPreloaderStatusAC('loading'))
     toDoListAPI.getTasks(toDoListID).then(res => {
         const tasks = res.data.items
         dispatch(SetTasks(toDoListID, tasks))
+        dispatch(SetPreloaderStatusAC('succeeded'))
     })
 }
 export const AddNewTaskTC = (toDoListID: string, title: string): AppThunk => (dispatch) => {
+    dispatch(SetPreloaderStatusAC('loading'))
     toDoListAPI.addNewTask(toDoListID, title).then(res => {
         const newTask = res.data.data.item
         dispatch(AddNewTask(newTask))
+        dispatch(SetPreloaderStatusAC('succeeded'))
     })
 }
 
 export const DeleteTaskTC = (toDoListID: string, taskID: string): AppThunk => (dispatch) => {
+    dispatch(SetPreloaderStatusAC('loading'))
     toDoListAPI.deleteTask(toDoListID, taskID).then(res => {
         dispatch(RemoveTask(toDoListID, taskID))
+        dispatch(SetPreloaderStatusAC('succeeded'))
     })
 }
 export const ChangeTaskTitleTC = (toDoListID: string, taskID: string, title: string): AppThunk => (dispatch, getState) => {
@@ -99,7 +106,7 @@ export const ChangeTaskTitleTC = (toDoListID: string, taskID: string, title: str
     const task: TaskType | undefined = tasksForCurrentToDoList.find(t => t.id === taskID)
 
     if (task) {
-        debugger
+        dispatch(SetPreloaderStatusAC('loading'))
         toDoListAPI.updateTask(toDoListID, taskID, {
             title: title,
             todoListId: task.todoListId,
@@ -111,7 +118,10 @@ export const ChangeTaskTitleTC = (toDoListID: string, taskID: string, title: str
             priority: task.priority,
             startDate: task.startDate,
             status: task.status
-        }).then(res => dispatch(ChangeTitleTask(toDoListID, taskID, title)))
+        }).then(res => {
+            dispatch(ChangeTitleTask(toDoListID, taskID, title));
+            dispatch(SetPreloaderStatusAC('succeeded'))
+        })
     }
 }
 
@@ -121,6 +131,7 @@ export const ChangeTaskStatusTC = (toDoListID: string, taskID: string, status: T
     const task: TaskType | undefined = tasksForCurrentToDoList.find(t => t.id === taskID)
 
     if (task) {
+        dispatch(SetPreloaderStatusAC('loading'))
         toDoListAPI.updateTask(toDoListID, taskID, {
             title: task.title,
             todoListId: task.todoListId,
@@ -132,6 +143,9 @@ export const ChangeTaskStatusTC = (toDoListID: string, taskID: string, status: T
             priority: task.priority,
             startDate: task.startDate,
             status: status
-        }).then(res => dispatch(ChangeStatusTask(toDoListID, taskID, status)))
+        }).then(res => {
+            dispatch(ChangeStatusTask(toDoListID, taskID, status));
+            dispatch(SetPreloaderStatusAC('succeeded'))
+        })
     }
 }

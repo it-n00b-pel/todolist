@@ -10,6 +10,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 function App() {
     console.log('APP');
     let toDoLists = useAppSelector(state => state.toDoLists);
+    const isLoading = useAppSelector(state => state.preloader.status);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -23,7 +24,7 @@ function App() {
     return (
         <div>
             <div className={'LinearProgress'}>
-                {true && <LinearProgress color="inherit"/>}
+                {isLoading === 'loading' && <LinearProgress color="inherit"/>}
             </div>
             <div className="App">
 

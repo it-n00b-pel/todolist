@@ -15,6 +15,7 @@ import {
     SetToDoLists
 } from '../actionCreators/actionCreatorsForToDoList';
 import {AppThunk} from '../store';
+import {SetPreloaderStatusAC} from './appPreloaderReducer';
 
 export type ActionTypesForToDoLists =
     AddNewToDoListAT
@@ -50,27 +51,39 @@ export const toDoListReducer = (state = initialStateToDoLists, action: ActionTyp
 //          ---         THUNK FOR TODOLIST           ---
 
 export const fetchToDoListsTC = (): AppThunk => {
+
     return (dispatch) => {
+        dispatch(SetPreloaderStatusAC('loading'))
         toDoListAPI.getToDoLists()
             .then((res) => {
                 dispatch(SetToDoLists(res.data));
+                dispatch(SetPreloaderStatusAC('succeeded'))
             });
     };
 };
 export const addNewToDoListTC = (title: string): AppThunk => (dispatch) => {
+    dispatch(SetPreloaderStatusAC('loading'))
     toDoListAPI.addNewToDoList(title).then(res => {
         dispatch(AddNewToDoList(res.data.data.item));
+        dispatch(SetPreloaderStatusAC('succeeded'))
     });
+
 };
 
 export const deleteToDoListTC = (toDoListID: string): AppThunk => (dispatch) => {
+    dispatch(SetPreloaderStatusAC('loading'))
     toDoListAPI.deleteToDoList(toDoListID).then(res => {
         dispatch(RemoveToDoList(toDoListID));
+        dispatch(SetPreloaderStatusAC('succeeded'))
     });
+
 };
 
 export const updateToDoListTC = (toDoListID: string, title: string): AppThunk => (dispatch) => {
+    dispatch(SetPreloaderStatusAC('loading'))
     toDoListAPI.updateToDoList(toDoListID, title).then(res => {
         dispatch(ChangeToDoListTitle(toDoListID, title));
+        dispatch(SetPreloaderStatusAC('succeeded'))
     });
+
 };
