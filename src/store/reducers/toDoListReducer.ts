@@ -85,6 +85,7 @@ export const addNewToDoListTC = (title: string): AppThunk => (dispatch) => {
 
 };
 
+
 export const deleteToDoListTC = (toDoListID: string): AppThunk => (dispatch) => {
     dispatch(SetPreloaderStatusAC('loading'));
     dispatch(SetEntityStatusToDoList(toDoListID, 'loading'));
@@ -101,4 +102,5 @@ export const updateToDoListTC = (toDoListID: string, title: string): AppThunk =>
         dispatch(ChangeToDoListTitle(toDoListID, title));
         dispatch(SetPreloaderStatusAC('succeeded'));
     });
+
 };
