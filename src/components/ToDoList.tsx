@@ -63,7 +63,7 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
     const changeToDoListTitle = useCallback((title: string) => {
         dispatch(updateToDoListTC(toDoListID, title));
     }, [toDoListID, dispatch]);
-
+// TODO add entity status for button 'delete' and AddItemForm
     return (
         <div>
 

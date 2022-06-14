@@ -12,7 +12,7 @@ function App() {
     console.log('APP');
     let toDoLists = useAppSelector(state => state.toDoLists);
     const isLoading = useAppSelector(state => state.app.status);
-    const error = useAppSelector(state => state.app.error);
+    const error = useAppSelector(state => state.app.error)
 
     const dispatch = useAppDispatch();
 

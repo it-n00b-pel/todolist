@@ -39,6 +39,8 @@ const Task = memo((props: TaskPropsType) => {
                     onChange={changeStatusTask}
                 />
             }
+
+
             <EditableSpan value={props.task.title} onChange={changeTitleTask}/>
             <IconButton onClick={deleteTask} disabled={props.task.entityStatus === 'loading'}>
                 <Delete/>

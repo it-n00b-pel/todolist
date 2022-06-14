@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, {AlertProps} from '@mui/material/Alert';
 import {SetAppErrorAC} from '../store/reducers/appReducer';
@@ -12,7 +12,7 @@ type ErrorSnackbarPropsType = {
     error: string;
 }
 
-export const ErrorSnackbar = memo((props: ErrorSnackbarPropsType) => {
+export const ErrorSnackbar = (props: ErrorSnackbarPropsType) => {
 
     const dispatch = useAppDispatch();
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
@@ -29,4 +29,4 @@ export const ErrorSnackbar = memo((props: ErrorSnackbarPropsType) => {
             </Alert>
         </Snackbar>
     );
-});
+};

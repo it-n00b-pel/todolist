@@ -17,7 +17,7 @@ import {
     SetTasks
 } from '../actionCreators/actionCreatorsForTasks';
 import {AddNewToDoListAT, RemoveToDoListAT} from '../actions/ActionsForToDoList';
-import {SetAppErrorAC, SetPreloaderStatusAC} from './appReducer';
+import {SetPreloaderStatusAC} from './appReducer';
 import {SetEntityStatusToDoList} from '../actionCreators/actionCreatorsForToDoList';
 
 export type ActionTypesForTasks =
@@ -104,14 +104,6 @@ export const AddNewTaskTC = (toDoListID: string, title: string): AppThunk => (di
             dispatch(AddNewTask(newTask));
             dispatch(SetPreloaderStatusAC('succeeded'));
             dispatch(SetEntityStatusToDoList(toDoListID, 'succeeded'));
-        } else {
-            if (res.data.messages.length) {
-                dispatch(SetAppErrorAC(res.data.messages[0]));
-            } else {
-                dispatch(SetAppErrorAC('Some error occurred'));
-            }
-            dispatch(SetPreloaderStatusAC('failed'));
-            dispatch(SetEntityStatusToDoList(toDoListID, 'failed'));
         }
     });
 };
