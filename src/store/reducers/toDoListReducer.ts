@@ -61,6 +61,10 @@ export const fetchToDoListsTC = (): AppThunk => {
             .then((res) => {
                 dispatch(SetToDoLists(res.data));
                 dispatch(SetPreloaderStatusAC('succeeded'));
+            })
+            .catch(error => {
+                dispatch(SetAppErrorAC(error.message));
+                dispatch(SetPreloaderStatusAC('failed'));
             });
     };
 };
@@ -70,35 +74,57 @@ export const addNewToDoListTC = (title: string): AppThunk => (dispatch) => {
         if (res.data.resultCode === 0) {
             dispatch(AddNewToDoList(res.data.data.item));
             dispatch(SetPreloaderStatusAC('succeeded'));
-        }else {
+        } else {
             if (res.data.messages.length) {
-                dispatch(SetAppErrorAC(res.data.messages[0]))
+                dispatch(SetAppErrorAC(res.data.messages[0]));
             } else {
-                dispatch(SetAppErrorAC('Some error occurred'))
+                dispatch(SetAppErrorAC('Some error occurred'));
             }
-            dispatch(SetPreloaderStatusAC('failed'))
+            dispatch(SetPreloaderStatusAC('failed'));
 
         }
 
-    });
+    })
+        .catch(error => {
+            dispatch(SetAppErrorAC(error.message));
+            dispatch(SetPreloaderStatusAC('failed'));
+        });
 
 };
-
 
 export const deleteToDoListTC = (toDoListID: string): AppThunk => (dispatch) => {
     dispatch(SetPreloaderStatusAC('loading'));
     dispatch(SetEntityStatusToDoList(toDoListID, 'loading'));
-    toDoListAPI.deleteToDoList(toDoListID).then(res => {
+    toDoListAPI.deleteToDoList(toDoListID).then(() => {
         dispatch(RemoveToDoList(toDoListID));
         dispatch(SetPreloaderStatusAC('succeeded'));
         dispatch(SetEntityStatusToDoList(toDoListID, 'succeeded'));
-    });
+    })
+        .catch(error => {
+            dispatch(SetAppErrorAC(error.message));
+            dispatch(SetPreloaderStatusAC('failed'));
+        });
 };
 
 export const updateToDoListTC = (toDoListID: string, title: string): AppThunk => (dispatch) => {
     dispatch(SetPreloaderStatusAC('loading'));
     toDoListAPI.updateToDoList(toDoListID, title).then(res => {
-        dispatch(ChangeToDoListTitle(toDoListID, title));
-        dispatch(SetPreloaderStatusAC('succeeded'));
-    });
+        if (res.data.resultCode === 0) {
+            dispatch(ChangeToDoListTitle(toDoListID, title));
+            dispatch(SetPreloaderStatusAC('succeeded'));
+        } else {
+            if (res.data.messages.length) {
+                dispatch(SetAppErrorAC(res.data.messages[0]));
+            } else {
+                dispatch(SetAppErrorAC('Some error occurred'));
+            }
+            dispatch(SetPreloaderStatusAC('failed'));
+            dispatch(SetEntityStatusToDoList(toDoListID, 'failed'));
+        }
+
+    })
+        .catch(error => {
+            dispatch(SetAppErrorAC(error.message));
+            dispatch(SetPreloaderStatusAC('failed'));
+        });
 };

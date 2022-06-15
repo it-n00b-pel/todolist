@@ -93,7 +93,11 @@ export const fetchTasks = (toDoListID: string): AppThunk => (dispatch) => {
         const tasks = res.data.items;
         dispatch(SetTasks(toDoListID, tasks));
         dispatch(SetPreloaderStatusAC('succeeded'));
-    });
+    })
+        .catch(error => {
+            dispatch(SetAppErrorAC(error.message));
+            dispatch(SetPreloaderStatusAC('failed'));
+        });
 };
 export const AddNewTaskTC = (toDoListID: string, title: string): AppThunk => (dispatch) => {
     dispatch(SetEntityStatusToDoList(toDoListID, 'loading'));
@@ -113,17 +117,25 @@ export const AddNewTaskTC = (toDoListID: string, title: string): AppThunk => (di
             dispatch(SetPreloaderStatusAC('failed'));
             dispatch(SetEntityStatusToDoList(toDoListID, 'failed'));
         }
-    });
+    })
+        .catch(error => {
+            dispatch(SetAppErrorAC(error.message));
+            dispatch(SetPreloaderStatusAC('failed'));
+        });
 };
 
 export const DeleteTaskTC = (toDoListID: string, taskID: string): AppThunk => (dispatch) => {
     dispatch(SetPreloaderStatusAC('loading'));
     dispatch(SetEntityTaskStatus(toDoListID, taskID, 'loading'));
-    toDoListAPI.deleteTask(toDoListID, taskID).then(res => {
+    toDoListAPI.deleteTask(toDoListID, taskID).then(() => {
         dispatch(RemoveTask(toDoListID, taskID));
         dispatch(SetPreloaderStatusAC('succeeded'));
         dispatch(SetEntityTaskStatus(toDoListID, taskID, 'succeeded'));
-    });
+    })
+        .catch(error => {
+            dispatch(SetAppErrorAC(error.message));
+            dispatch(SetPreloaderStatusAC('failed'));
+        });
 };
 export const ChangeTaskTitleTC = (toDoListID: string, taskID: string, title: string): AppThunk => (dispatch, getState) => {
     const allTasks = getState().tasks;
@@ -133,20 +145,26 @@ export const ChangeTaskTitleTC = (toDoListID: string, taskID: string, title: str
     if (task) {
         dispatch(SetPreloaderStatusAC('loading'));
         toDoListAPI.updateTask(toDoListID, taskID, {
-            title: title,
-            todoListId: task.todoListId,
-            addedDate: task.addedDate,
-            deadline: task.deadline,
-            order: task.order,
-            id: task.id,
-            description: task.description,
-            priority: task.priority,
-            startDate: task.startDate,
-            status: task.status
+            ...task, title: title
         }).then(res => {
-            dispatch(ChangeTitleTask(toDoListID, taskID, title));
-            dispatch(SetPreloaderStatusAC('succeeded'));
-        });
+            if (res.data.resultCode === 0) {
+                dispatch(ChangeTitleTask(toDoListID, taskID, title));
+                dispatch(SetPreloaderStatusAC('succeeded'));
+            } else {
+                if (res.data.messages.length) {
+                    dispatch(SetAppErrorAC(res.data.messages[0]));
+                } else {
+                    dispatch(SetAppErrorAC('Some error occurred'));
+                }
+                dispatch(SetPreloaderStatusAC('failed'));
+                dispatch(SetEntityStatusToDoList(toDoListID, 'failed'));
+            }
+
+        })
+            .catch(error => {
+                dispatch(SetAppErrorAC(error.message));
+                dispatch(SetPreloaderStatusAC('failed'));
+            });
     }
 };
 
@@ -159,20 +177,15 @@ export const ChangeTaskStatusTC = (toDoListID: string, taskID: string, status: T
         dispatch(SetPreloaderStatusAC('loading'));
         dispatch(SetEntityTaskStatus(toDoListID, taskID, 'loading'));
         toDoListAPI.updateTask(toDoListID, taskID, {
-            title: task.title,
-            todoListId: task.todoListId,
-            addedDate: task.addedDate,
-            deadline: task.deadline,
-            order: task.order,
-            id: task.id,
-            description: task.description,
-            priority: task.priority,
-            startDate: task.startDate,
-            status: status
-        }).then(res => {
+            ...task, status: status
+        }).then(() => {
             dispatch(ChangeStatusTask(toDoListID, taskID, status));
-                dispatch(SetPreloaderStatusAC('succeeded'));
+            dispatch(SetPreloaderStatusAC('succeeded'));
             dispatch(SetEntityTaskStatus(toDoListID, taskID, 'succeeded'));
-        });
+        })
+            .catch(error => {
+                dispatch(SetAppErrorAC(error.message));
+                dispatch(SetPreloaderStatusAC('failed'));
+            });
     }
 };

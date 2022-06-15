@@ -12,3 +12,4 @@ const AppLoader = () => {
 };
 
 export default AppLoader;
+
