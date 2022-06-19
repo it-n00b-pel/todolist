@@ -3,7 +3,8 @@ import {
     AddNewToDoListAT,
     ChangeFilterToDoListAT,
     ChangeTitleToDoListAT,
-    RemoveToDoListAT, SetEntityStatusToDoListAT,
+    RemoveToDoListAT,
+    SetEntityStatusToDoListAT,
     SetToDoListsAT
 } from '../actions/ActionsForToDoList';
 import {ACTION_TYPE} from '../ENUM/ENUM';
@@ -11,11 +12,13 @@ import {toDoListAPI} from '../../api/ToDoListAPI';
 import {
     AddNewToDoList,
     ChangeToDoListTitle,
-    RemoveToDoList, SetEntityStatusToDoList,
+    RemoveToDoList,
+    SetEntityStatusToDoList,
     SetToDoLists
 } from '../actionCreators/actionCreatorsForToDoList';
 import {AppThunk} from '../store';
-import {SetAppErrorAC, SetPreloaderStatusAC} from './appReducer';
+import {SetPreloaderStatusAC} from './appReducer';
+import {handleServerAppError, handleServerNetworkError} from '../../utils-error/error-utils';
 
 export type ActionTypesForToDoLists =
     AddNewToDoListAT
@@ -63,8 +66,8 @@ export const fetchToDoListsTC = (): AppThunk => {
                 dispatch(SetPreloaderStatusAC('succeeded'));
             })
             .catch(error => {
-                dispatch(SetAppErrorAC(error.message));
-                dispatch(SetPreloaderStatusAC('failed'));
+                handleServerAppError(error, dispatch);
+                handleServerNetworkError(error.message, dispatch);
             });
     };
 };
@@ -75,21 +78,12 @@ export const addNewToDoListTC = (title: string): AppThunk => (dispatch) => {
             dispatch(AddNewToDoList(res.data.data.item));
             dispatch(SetPreloaderStatusAC('succeeded'));
         } else {
-            if (res.data.messages.length) {
-                dispatch(SetAppErrorAC(res.data.messages[0]));
-            } else {
-                dispatch(SetAppErrorAC('Some error occurred'));
-            }
-            dispatch(SetPreloaderStatusAC('failed'));
-
+            handleServerAppError(res.data, dispatch);
         }
-
     })
         .catch(error => {
-            dispatch(SetAppErrorAC(error.message));
-            dispatch(SetPreloaderStatusAC('failed'));
+            handleServerNetworkError(error, dispatch);
         });
-
 };
 
 export const deleteToDoListTC = (toDoListID: string): AppThunk => (dispatch) => {
@@ -101,30 +95,26 @@ export const deleteToDoListTC = (toDoListID: string): AppThunk => (dispatch) => 
         dispatch(SetEntityStatusToDoList(toDoListID, 'succeeded'));
     })
         .catch(error => {
-            dispatch(SetAppErrorAC(error.message));
-            dispatch(SetPreloaderStatusAC('failed'));
+            handleServerNetworkError(error, dispatch, toDoListID);
+            // dispatch(SetEntityStatusToDoList(toDoListID, 'failed'));
         });
 };
 
 export const updateToDoListTC = (toDoListID: string, title: string): AppThunk => (dispatch) => {
     dispatch(SetPreloaderStatusAC('loading'));
+    dispatch(SetEntityStatusToDoList(toDoListID, 'loading'));
     toDoListAPI.updateToDoList(toDoListID, title).then(res => {
         if (res.data.resultCode === 0) {
             dispatch(ChangeToDoListTitle(toDoListID, title));
             dispatch(SetPreloaderStatusAC('succeeded'));
+            dispatch(SetEntityStatusToDoList(toDoListID, 'succeeded'));
         } else {
-            if (res.data.messages.length) {
-                dispatch(SetAppErrorAC(res.data.messages[0]));
-            } else {
-                dispatch(SetAppErrorAC('Some error occurred'));
-            }
-            dispatch(SetPreloaderStatusAC('failed'));
+            handleServerAppError(res.data, dispatch);
             dispatch(SetEntityStatusToDoList(toDoListID, 'failed'));
         }
-
+        //  handleServerAppError(res.data, dispatch);
     })
         .catch(error => {
-            dispatch(SetAppErrorAC(error.message));
-            dispatch(SetPreloaderStatusAC('failed'));
+            handleServerNetworkError(error, dispatch, toDoListID);
         });
 };

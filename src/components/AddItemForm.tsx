@@ -43,7 +43,7 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
                 onKeyDown={onKeyPressHandler}
                 label="Task"
                 helperText={error}
-                style={{backgroundColor:"AppWorkspace"}}
+                style={{backgroundColor:"AppWorkspace", width:"360px"}}
                 disabled={props.disabled}
             />
             <IconButton className="addBtn" onClick={addItem} disabled={props.disabled}>

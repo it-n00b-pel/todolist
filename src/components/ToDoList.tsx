@@ -65,7 +65,7 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
     }, [toDoListID, dispatch]);
 
     return (
-        <div>
+        <div >
 
             <h2 className={s.toDoListTitle}>
                 <EditableSpan value={toDoList.title}
@@ -82,7 +82,7 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
                     disabled={toDoList.entityStatus === 'loading'}
                 />
             </div>
-            <div>
+            <div style={{maxHeight:'270px',overflowY:'scroll', border:"solid 1px"}}>
                 {tasks ? tasks.map(t => {
                         return <Task key={t.id}
                                      ToDoListID={toDoListID}
@@ -92,12 +92,12 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
                     : null}
             </div>
 
-            <ButtonGroup variant="contained" aria-label="outlined button group"
+            <ButtonGroup className="buttons" variant="contained"
                          style={{marginTop: '20px', width: '100%'}}>
-                <Button style={{width: '33%'}} color={'inherit'} onClick={changeFilterTypeToAll}>All</Button>
+                <Button style={{width: '33%'}} color={'info'} onClick={changeFilterTypeToAll}>All</Button>
                 <Button style={{width: '33%'}} color={'success'}
                         onClick={changeFilterTypeToCompleted}>Completed</Button>
-                <Button style={{width: '33%'}} color={'error'} onClick={changeFilterTypeToActive}>Active</Button>
+                <Button className={toDoList.filter==="active"?"act":""} style={{width: '33%'}} color={'error'} onClick={changeFilterTypeToActive}>Active</Button>
             </ButtonGroup>
         </div>
     );

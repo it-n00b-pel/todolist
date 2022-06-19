@@ -3,7 +3,8 @@ import {
     AddNewTaskAT,
     ChangeTaskStatusAT,
     ChangeTaskTitleAT,
-    RemoveTaskAT, SetEntityTaskStatusAT,
+    RemoveTaskAT,
+    SetEntityTaskStatusAT,
     SetTasksAT
 } from '../actions/ActionsForTasks';
 import {ACTION_TYPE, TaskStatus} from '../ENUM/ENUM';
@@ -13,12 +14,14 @@ import {
     AddNewTask,
     ChangeStatusTask,
     ChangeTitleTask,
-    RemoveTask, SetEntityTaskStatus,
+    RemoveTask,
+    SetEntityTaskStatus,
     SetTasks
 } from '../actionCreators/actionCreatorsForTasks';
 import {AddNewToDoListAT, RemoveToDoListAT} from '../actions/ActionsForToDoList';
-import {SetAppErrorAC, SetPreloaderStatusAC} from './appReducer';
+import {SetPreloaderStatusAC} from './appReducer';
 import {SetEntityStatusToDoList} from '../actionCreators/actionCreatorsForToDoList';
+import {handleServerAppError, handleServerNetworkError} from '../../utils-error/error-utils';
 
 export type ActionTypesForTasks =
     AddNewTaskAT
@@ -95,7 +98,7 @@ export const fetchTasks = (toDoListID: string): AppThunk => (dispatch) => {
         dispatch(SetPreloaderStatusAC('succeeded'));
     })
         .catch(error => {
-            dispatch(SetAppErrorAC(error.message));
+            handleServerNetworkError(error, dispatch);
             dispatch(SetPreloaderStatusAC('failed'));
         });
 };
@@ -109,18 +112,13 @@ export const AddNewTaskTC = (toDoListID: string, title: string): AppThunk => (di
             dispatch(SetPreloaderStatusAC('succeeded'));
             dispatch(SetEntityStatusToDoList(toDoListID, 'succeeded'));
         } else {
-            if (res.data.messages.length) {
-                dispatch(SetAppErrorAC(res.data.messages[0]));
-            } else {
-                dispatch(SetAppErrorAC('Some error occurred'));
-            }
-            dispatch(SetPreloaderStatusAC('failed'));
+            handleServerAppError(res.data, dispatch);
             dispatch(SetEntityStatusToDoList(toDoListID, 'failed'));
         }
     })
         .catch(error => {
-            dispatch(SetAppErrorAC(error.message));
-            dispatch(SetPreloaderStatusAC('failed'));
+            handleServerNetworkError(error, dispatch,toDoListID);
+            // dispatch(SetEntityStatusToDoList(toDoListID, 'failed'));
         });
 };
 
@@ -133,9 +131,10 @@ export const DeleteTaskTC = (toDoListID: string, taskID: string): AppThunk => (d
         dispatch(SetEntityTaskStatus(toDoListID, taskID, 'succeeded'));
     })
         .catch(error => {
-            dispatch(SetAppErrorAC(error.message));
-            dispatch(SetPreloaderStatusAC('failed'));
+            handleServerNetworkError(error, dispatch, toDoListID, taskID);
+            // dispatch(SetEntityTaskStatus(toDoListID, taskID, 'failed'));
         });
+
 };
 export const ChangeTaskTitleTC = (toDoListID: string, taskID: string, title: string): AppThunk => (dispatch, getState) => {
     const allTasks = getState().tasks;
@@ -151,19 +150,12 @@ export const ChangeTaskTitleTC = (toDoListID: string, taskID: string, title: str
                 dispatch(ChangeTitleTask(toDoListID, taskID, title));
                 dispatch(SetPreloaderStatusAC('succeeded'));
             } else {
-                if (res.data.messages.length) {
-                    dispatch(SetAppErrorAC(res.data.messages[0]));
-                } else {
-                    dispatch(SetAppErrorAC('Some error occurred'));
-                }
-                dispatch(SetPreloaderStatusAC('failed'));
-                dispatch(SetEntityStatusToDoList(toDoListID, 'failed'));
+                handleServerAppError(res.data, dispatch);
             }
-
         })
             .catch(error => {
-                dispatch(SetAppErrorAC(error.message));
-                dispatch(SetPreloaderStatusAC('failed'));
+                handleServerNetworkError(error, dispatch,toDoListID,taskID);
+              //  dispatch(SetEntityTaskStatus(toDoListID, taskID, 'failed'));
             });
     }
 };
@@ -184,8 +176,8 @@ export const ChangeTaskStatusTC = (toDoListID: string, taskID: string, status: T
             dispatch(SetEntityTaskStatus(toDoListID, taskID, 'succeeded'));
         })
             .catch(error => {
-                dispatch(SetAppErrorAC(error.message));
-                dispatch(SetPreloaderStatusAC('failed'));
+                handleServerNetworkError(error, dispatch,toDoListID,taskID);
+              //  dispatch(SetEntityTaskStatus(toDoListID, taskID, 'failed'));
             });
     }
 };

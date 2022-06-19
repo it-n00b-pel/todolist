@@ -1,33 +1,59 @@
 .App {
+    margin: 10px;
     display: flex;
-    margin:50px;
 }
+
+.main_input {
+    width: 300px;
+}
+
+.todoLISTS {
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.todoPaper {
+    background: linear-gradient(#bbb, transparent 1px), linear-gradient(90deg, #bbb, transparent 1px);
+    background-size: 10px 10px;
+    width: 380px;
+
+}
+
+
 
 .input_block {
     margin-top: 20px;
     display: flex;
     height: 30px;
     align-items: center;
-    justify-content: space-between;
+
+
+
 }
 
-.todoPaper {
-    background: linear-gradient( #bbb, transparent 1px), linear-gradient( 90deg, #bbb, transparent 1px);
-    background-size: 10px 10px;
-    width: 380px;
-}
+
+
+
+
 .toDoListTitle {
     margin: 0;
     font-size: 36px;
     display: flex;
 
 }
-.taskTitle{
+
+.taskTitle {
     margin: 0;
-    max-width:  100%;
+    max-width: 100%;
     white-space: nowrap; /* Запрещаем перенос строк */
     overflow: hidden; /* Обрезаем все, что не помещается в область */
     padding: 5px; /* Поля вокруг текста */
     text-overflow: ellipsis; /* Добавляем многоточие */
 
+}
+
+.buttons .act {
+    background-color: #d32f2f;
+    font-weight: bolder;
 }
