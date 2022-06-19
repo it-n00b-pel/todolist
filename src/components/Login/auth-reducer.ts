@@ -36,5 +36,22 @@ export const loginTC = (data: LoginParamsType): AppThunk => (dispatch) => {
         });
 };
 
+export const logoutTC = (): AppThunk => (dispatch) => {
+    dispatch(SetPreloaderStatusAC('loading'))
+    authApi.logout()
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(setIsLoggedInAC(false))
+                dispatch(SetPreloaderStatusAC('succeeded'))
+            } else {
+                handleServerAppError(res.data, dispatch)
+            }
+        })
+        .catch((error) => {
+            handleServerNetworkError(error, dispatch)
+        })
+}
+
+
 // types
 export type ActionsTypeForAuth = ReturnType<typeof setIsLoggedInAC>

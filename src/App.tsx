@@ -14,7 +14,7 @@ function App() {
     const dispatch = useAppDispatch();
     // let toDoLists = useAppSelector(state => state.toDoLists);
     // const isLoading = useAppSelector(state => state.app.status);
-    const isInitialized = useAppSelector(state => state.app.isInitialized)
+    const isInitialized = useAppSelector(state => state.app.isInitialized);
     const error = useAppSelector(state => state.app.error);
     useEffect(() => {
         dispatch(initializeAppTC());
@@ -32,7 +32,7 @@ function App() {
         return <div
             style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
             <CircularProgress/>
-        </div>
+        </div>;
     }
 
     return (
