@@ -17,10 +17,13 @@ export enum ACTION_TYPE {
     SET_TASKS = 'SET_TASKS',
     SET_ENTITY_STATUS_TASK = 'SET_ENTITY_STATUS_TASK',
 
+    //          ---         ACTION TYPES FOR AUTH                 ---
+    SET_IS_LOGGED_IN = 'SET_IS_LOGGED_IN',
     //          ---         ACTION TYPES FOR APP LOADER           ---
 
     SET_PRELOADER_STATUS = 'SET_PRELOADER_STATUS',
     SET_APP_ERROR = 'SET_APP_ERROR',
+    SET_APP_INITIALIZED = 'SET_APP_INITIALIZED',
 }
 
 export enum TaskStatus {

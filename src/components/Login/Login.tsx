@@ -8,9 +8,11 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from 'formik';
-import {loginTC} from './auth-reducer';
+import {loginTC} from '../../store/reducers/auth-reducer';
 import {useAppDispatch, useAppSelector} from '../../store/store';
 import {Navigate} from 'react-router-dom';
+import s from './Login.module.css';
+import {SetPreloaderStatusAC} from '../../store/reducers/appReducer';
 
 type FormikErrorType = {
     email?: string
@@ -21,6 +23,7 @@ type FormikErrorType = {
 export const Login = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const dispatch = useAppDispatch();
+    dispatch(SetPreloaderStatusAC('idle'));
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -50,7 +53,7 @@ export const Login = () => {
     });
     if (isLoggedIn) return <Navigate to="/"/>;
 
-    return <Grid container justifyContent={'center'}>
+    return <div className={s.loginBlock}>
         <Grid item justifyContent={'center'}>
             <form onSubmit={formik.handleSubmit}>
                 <FormControl>
@@ -87,5 +90,5 @@ export const Login = () => {
                 </FormControl></form>
 
         </Grid>
-    </Grid>;
+    </div>;
 };

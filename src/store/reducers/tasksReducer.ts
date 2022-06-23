@@ -37,7 +37,6 @@ export const tasksReducer = (state = initialStateTask, action: ActionTypesForTas
     switch (action.type) {
         case ACTION_TYPE.ADD_NEW_TASK:
             const newTask: DomainTaskType = {...action.task, entityStatus: 'idle'};
-
             return {
                 ...state, [action.task.todoListId]: [newTask, ...state[action.task.todoListId]]
             };

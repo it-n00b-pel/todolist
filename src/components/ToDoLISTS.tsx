@@ -7,7 +7,7 @@ import ToDoList from './ToDoList';
 import {Navigate} from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import {Logout} from '@mui/icons-material';
-import {logoutTC} from './Login/auth-reducer';
+import {logoutTC} from '../store/reducers/auth-reducer';
 
 const ToDoLists = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
@@ -33,23 +33,21 @@ const ToDoLists = () => {
 
             <div className="main_input"><AddItemForm addItem={addNewToDoList}/></div>
 
-            <Grid className="todoLISTS" container spacing={3}>
+            <div className="todoLISTS" >
                 {toDoLists.map((t) => {
                     return <Grid className="TodoItem" item key={t.id}>
-                        <Paper className={'todoPaper'} elevation={8}
-                               style={{padding: '10px'}
-                               }>
+                        <Paper className={'todoPaper'} elevation={8}>
                             <ToDoList toDoList={t} key={t.id} toDoListID={t.id}/>
                         </Paper>
                     </Grid>;
                 })}
-            </Grid>
-            {isLoggedIn
-                && <IconButton className="" size="medium" color="secondary" style={{height: '50px'}}>
-                    <Logout onClick={() => (dispatch(logoutTC()))}/>
-                </IconButton>}
-
-
+            </div>
+           <div>
+               {isLoggedIn
+                   && <IconButton className="" size="medium" color="secondary" style={{height: '50px', width:"50px"}}>
+                       <Logout onClick={() => (dispatch(logoutTC()))}/>
+                   </IconButton>}
+           </div>
         </div>
     );
 };

@@ -82,7 +82,7 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
                     disabled={toDoList.entityStatus === 'loading'}
                 />
             </div>
-            <div style={{maxHeight:'270px',overflowY:'scroll', border:"solid 1px"}}>
+            <div style={{maxHeight:'270px',overflowY:'scroll'}}>
                 {tasks ? tasks.map(t => {
                         return <Task key={t.id}
                                      ToDoListID={toDoListID}

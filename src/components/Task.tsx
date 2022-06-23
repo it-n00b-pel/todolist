@@ -31,7 +31,7 @@ const Task = memo((props: TaskPropsType) => {
     return (
         <div style={{display: 'flex', fontSize: '22px', fontWeight: '600', alignItems: 'center'}}>
             {props.task.entityStatus === 'loading' ?
-                <CircularProgress style={{margin: '12px'}} color="inherit" size={18}/>
+                <CircularProgress style={{margin: '3px'}} color="inherit" size={18}/>
                 :
                 <Checkbox
                     checked={props.task.status === TaskStatus.Completed}

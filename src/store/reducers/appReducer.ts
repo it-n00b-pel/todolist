@@ -1,6 +1,6 @@
 import {ACTION_TYPE} from '../ENUM/ENUM';
 import {authApi} from '../../api/ToDoListAPI';
-import {setIsLoggedInAC} from '../../components/Login/auth-reducer';
+import {setIsLoggedInAC} from './auth-reducer';
 import {AppThunk} from '../store';
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
@@ -21,8 +21,8 @@ export const appReducer = (state: AppInitialStateType = initialState, action: Ac
         case ACTION_TYPE.SET_APP_ERROR: {
             return {...state, error: action.error};
         }
-        case 'APP/SET-Initialized': {
-            return {...state, isInitialized: action.isInitialized}
+        case ACTION_TYPE.SET_APP_INITIALIZED: {
+            return {...state, isInitialized: action.isInitialized};
         }
         default:
             return state;
@@ -42,7 +42,10 @@ export const SetAppErrorAC = (error: string | null) => {
         error,
     } as const;
 };
-export const setIsInitializedAC = (isInitialized: boolean) => ({type: 'APP/SET-Initialized', isInitialized} as const);
+export const setIsInitializedAC = (isInitialized: boolean) => ({
+    type: ACTION_TYPE.SET_APP_INITIALIZED,
+    isInitialized
+} as const);
 
 export const initializeAppTC = (): AppThunk => (dispatch) => {
     authApi.me().then(res => {

@@ -4,7 +4,7 @@ import {ActionTypesForTasks, tasksReducer} from './reducers/tasksReducer';
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {ActionTypesForAppPreloader, appReducer} from './reducers/appReducer';
-import {ActionsTypeForAuth, authReducer} from '../components/Login/auth-reducer';
+import {ActionsTypeForAuth, authReducer} from './reducers/auth-reducer';
 
 const rootReducer = combineReducers({
     toDoLists: toDoListReducer,

@@ -6,11 +6,17 @@ import {SetEntityTaskStatus} from '../store/actionCreators/actionCreatorsForTask
 
 // generic function
 export const handleServerAppError = <T>(data: ResponseType<T>, dispatch: AppDispatch) => {
+
+    if (data.message?.length) {
+        dispatch(SetAppErrorAC(data.message.toString()));
+    }
     if (data.messages.length) {
         dispatch(SetAppErrorAC(data.messages[0]));
     } else {
         dispatch(SetAppErrorAC('Some error occurred'));
     }
+
+
     dispatch(SetPreloaderStatusAC('failed'));
 };
 
