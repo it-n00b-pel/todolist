@@ -8,9 +8,7 @@ const instance = axios.create({
         'API-KEY': '8fad767d-9189-48dd-8e32-2ec4faaa594d'
     }
 });
-// const config = {
-//     onUploadProgress: progressEvent => console.log(progressEvent.loaded)
-// }
+
 export const toDoListAPI = {
     getToDoLists() {
         return instance.get<ToDoListType[]>('todo-lists',);
@@ -46,8 +44,8 @@ export const authApi = {
     me() {
         return instance.get<ResponseType<{ data: LoginParamsType }>>(`/auth/me`);
     },
-    logout(){
-        return instance.delete<ResponseType>(`/auth/login`)
+    logout() {
+        return instance.delete<ResponseType>(`/auth/login`);
     }
 };
 

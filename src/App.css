@@ -5,6 +5,43 @@
     justify-content: space-between;
 }
 
+.currencyInput {
+    margin-top: 20px;
+    background-color: #bbbbbb;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.currencyParameters {
+    display: flex;
+    align-items: end;
+}
+
+.privat24logo {
+    width: 35px;
+}
+
+.actionCurrency {
+    width: 55%;
+    margin: 0 auto;
+}
+.resultCurrency {
+    display: flex;
+    justify-content: space-between;
+}
+.resultCurrencyLeft {
+    width: 55%;
+    display: flex;
+    justify-content: space-between;
+}
+.actionCurrency .actionActive {
+    background-color: #29b6f6;
+}
+
+.actionCurrency span {
+    padding-right: 20px;
+}
+
 .main_input {
     max-width: 300px;
 }
@@ -21,8 +58,9 @@
     /*!*-webkit-column-gap: 1em;*!*/
     /*!*column-gap: 1em;*!*/
 }
+
 .TodoItem {
-   /*display: inline-block;*/
+    /*display: inline-block;*/
 }
 
 .todoPaper {
@@ -39,10 +77,6 @@
     height: 30px;
     align-items: center;
 }
-
-
-
-
 
 .toDoListTitle {
     margin: 0;

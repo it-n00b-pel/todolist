@@ -5,16 +5,18 @@ import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {ActionTypesForAppPreloader, appReducer} from './reducers/appReducer';
 import {ActionsTypeForAuth, authReducer} from './reducers/auth-reducer';
+import {ActionTypesForCurrency, currencyReducer} from '../components/Currency/currencyReducer';
 
 const rootReducer = combineReducers({
     toDoLists: toDoListReducer,
     tasks: tasksReducer,
     app: appReducer,
-    auth: authReducer
+    auth: authReducer,
+    currency: currencyReducer,
 });
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
-type AppActionsType = ActionTypesForToDoLists | ActionTypesForTasks | ActionTypesForAppPreloader | ActionsTypeForAuth
+type AppActionsType = ActionTypesForToDoLists | ActionTypesForTasks | ActionTypesForAppPreloader | ActionsTypeForAuth | ActionTypesForCurrency
 
 export type AppRootStateType = ReturnType<typeof store.getState>
 export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AppActionsType>

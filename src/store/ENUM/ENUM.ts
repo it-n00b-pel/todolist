@@ -18,12 +18,19 @@ export enum ACTION_TYPE {
     SET_ENTITY_STATUS_TASK = 'SET_ENTITY_STATUS_TASK',
 
     //          ---         ACTION TYPES FOR AUTH                 ---
+
     SET_IS_LOGGED_IN = 'SET_IS_LOGGED_IN',
+
     //          ---         ACTION TYPES FOR APP LOADER           ---
 
     SET_PRELOADER_STATUS = 'SET_PRELOADER_STATUS',
     SET_APP_ERROR = 'SET_APP_ERROR',
     SET_APP_INITIALIZED = 'SET_APP_INITIALIZED',
+
+    //          ---         ACTION TYPES FOR APP LOADER           ---
+
+    SET_CURRENCY = 'SET_CURRENCY',
+    CHANGE_CHANGE_ACTION = 'CHANGE_CHANGE_ACTION',
 }
 
 export enum TaskStatus {
