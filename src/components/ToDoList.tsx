@@ -83,13 +83,16 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
                 />
             </div>
             <div className={'tasks'}>
-                {tasks ? tasks.map(t => {
-                        return <Task key={t.id}
-                                     ToDoListID={toDoListID}
-                                     task={t}/>;
-                    })
-                    : null}
+                {tasks ? tasks.map((t) => (
+                        <Task key={t.id}
+                              ToDoListID={toDoListID}
+                              task={t}/>
+
+                    ))
+                    : null
+                }
             </div>
+
 
             <ButtonGroup className="buttons" variant="contained">
                 <Button className={toDoList.filter === 'all' ? 'act' : ''} style={{width: '33%'}} color={'info'} onClick={changeFilterTypeToAll}>All</Button>
