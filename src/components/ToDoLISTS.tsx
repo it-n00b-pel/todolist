@@ -8,7 +8,6 @@ import {Navigate} from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import {Logout} from '@mui/icons-material';
 import {logoutTC} from '../store/reducers/auth-reducer';
-import CurrencyExchangeContainer from './Currency/CurrencyExchangeContainer';
 
 const ToDoLists = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
@@ -31,10 +30,14 @@ const ToDoLists = () => {
     }
     return (
         <div className="App">
-
-            <div>
+            <div style={{display:'flex'}}>
+                <div>
+                    {isLoggedIn
+                        && <IconButton className="" size="medium" color="secondary" style={{height: '50px', width:"50px"}}>
+                            <Logout onClick={() => (dispatch(logoutTC()))}/>
+                        </IconButton>}
+                </div>
                 <div className="main_input"><AddItemForm addItem={addNewToDoList}/></div>
-                <CurrencyExchangeContainer/>
             </div>
             <div className="todoLISTS" >
                 {toDoLists.map((t) => {
@@ -45,12 +48,7 @@ const ToDoLists = () => {
                     </Grid>;
                 })}
             </div>
-           <div>
-               {isLoggedIn
-                   && <IconButton className="" size="medium" color="secondary" style={{height: '50px', width:"50px"}}>
-                       <Logout onClick={() => (dispatch(logoutTC()))}/>
-                   </IconButton>}
-           </div>
+
         </div>
     );
 };

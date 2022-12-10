@@ -1,49 +1,19 @@
 .App {
     margin: 0 auto;
     display: flex;
-    width: 90%;
+    width: 95%;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
-.currencyInput {
-    margin-top: 20px;
-    background-color: #bbbbbb;
-    border-radius: 5px;
-    font-size: 18px;
-}
 
-.currencyParameters {
-    display: flex;
-    align-items: end;
-}
 
-.privat24logo {
-    width: 35px;
-}
 
-.actionCurrency {
-    width: 55%;
-    margin: 0 auto;
-}
-.resultCurrency {
-    display: flex;
-    justify-content: space-between;
-}
-.resultCurrencyLeft {
-    width: 55%;
-    display: flex;
-    justify-content: space-between;
-}
-.actionCurrency .actionActive {
-    background-color: #29b6f6;
-}
 
-.actionCurrency span {
-    padding-right: 20px;
-}
 
 .main_input {
     max-width: 300px;
+    padding-bottom: 30px;
 }
 
 .todoLISTS {
@@ -93,6 +63,9 @@
     padding: 5px; /* Поля вокруг текста */
     text-overflow: ellipsis; /* Добавляем многоточие */
 
+}
+.taskComplete {
+   text-decoration: line-through;
 }
 
 .buttons .act {

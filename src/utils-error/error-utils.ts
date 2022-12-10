@@ -16,7 +16,6 @@ export const handleServerAppError = <T>(data: ResponseType<T>, dispatch: AppDisp
         dispatch(SetAppErrorAC('Some error occurred'));
     }
 
-
     dispatch(SetPreloaderStatusAC('failed'));
 };
 

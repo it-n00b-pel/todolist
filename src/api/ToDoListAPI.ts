@@ -1,12 +1,12 @@
-import axios, {AxiosResponse} from 'axios';
+import axios from 'axios';
 import {TaskStatus} from '../store/ENUM/ENUM';
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     withCredentials: true,
     headers: {
-        'API-KEY': '8fad767d-9189-48dd-8e32-2ec4faaa594d'
-    }
+        'API-KEY': process.env.REACT_APP_API_KEY as string,
+    },
 });
 
 export const toDoListAPI = {
@@ -14,7 +14,7 @@ export const toDoListAPI = {
         return instance.get<ToDoListType[]>('todo-lists',);
     },
     deleteToDoList(toDoListID: string) {
-        return instance.delete<AxiosResponse<ResponseType>>(`todo-lists/${toDoListID}`);
+        return instance.delete<ResponseType>(`todo-lists/${toDoListID}`);
     },
     addNewToDoList(title: string) {
         return instance.post<ResponseType<{ item: ToDoListType }>>(`todo-lists`, {title});

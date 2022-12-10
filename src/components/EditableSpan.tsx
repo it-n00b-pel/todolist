@@ -1,13 +1,14 @@
 import React, {ChangeEvent, KeyboardEvent, memo, useCallback, useState} from 'react';
 import TextField from '@material-ui/core/TextField';
+import {TaskStatus} from '../store/ENUM/ENUM';
 
 type EditableSpanPropsType = {
     value: string
     onChange: (newValue: string) => void
+    taskStatus?: TaskStatus
 }
 
 export const EditableSpan = memo((props: EditableSpanPropsType) => {
-    console.log('EDITABLE SPAN');
     let [editMode, setEditMode] = useState(false);
     let [title, setTitle] = useState(props.value);
 
@@ -17,7 +18,7 @@ export const EditableSpan = memo((props: EditableSpanPropsType) => {
     }, [props.value]);
     const activateViewMode = useCallback(() => {
         setEditMode(false);
-        props.onChange(title);
+        props.value !== title && props.onChange(title);
     }, [title, props]);
     const changeTitle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value);
@@ -31,5 +32,6 @@ export const EditableSpan = memo((props: EditableSpanPropsType) => {
     return editMode
         ? <TextField value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode}
                      onKeyPress={onKeyPressHandler}/>
-        : <p className={'taskTitle'} onDoubleClick={activateEditMode}>{props.value} </p>;
+        : <p className={props.taskStatus === TaskStatus.Completed ? 'taskComplete taskTitle' : 'taskTitle'} onDoubleClick={activateEditMode}>{props.value} </p>;
 });
+

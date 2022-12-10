@@ -24,14 +24,15 @@ export const setIsLoggedInAC = (value: boolean) =>
 // thunks
 export const loginTC = (data: LoginParamsType): AppThunk => (dispatch) => {
     dispatch(SetPreloaderStatusAC('loading'));
-    authApi.login(data).then(res => {
-        if (res.data.resultCode === 0) {
-            dispatch(setIsLoggedInAC(true));
-            dispatch(SetPreloaderStatusAC('succeeded'));
-        } else {
-            handleServerAppError(res.data, dispatch);
-        }
-    })
+    authApi.login(data)
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(setIsLoggedInAC(true));
+                dispatch(SetPreloaderStatusAC('succeeded'));
+            } else {
+                handleServerAppError(res.data, dispatch);
+            }
+        })
         .catch(error => {
             handleServerNetworkError(error, dispatch);
         });
