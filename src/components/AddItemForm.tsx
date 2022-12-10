@@ -5,7 +5,8 @@ import AddIcon from '@mui/icons-material/Add';
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void,
-    disabled?: boolean
+    disabled?: boolean,
+    label: string
 }
 
 export const AddItemForm = memo((props: AddItemFormPropsType) => {
@@ -41,13 +42,13 @@ export const AddItemForm = memo((props: AddItemFormPropsType) => {
                 value={title}
                 onChange={onChangeHandler}
                 onKeyDown={onKeyPressHandler}
-                label="Task"
+                label={props.label}
                 helperText={error}
-                style={{backgroundColor:"AppWorkspace", width:"360px", borderRadius:5}}
+                style={{backgroundColor: 'AppWorkspace', width: '360px', borderRadius: 5}}
                 disabled={props.disabled}
             />
-            <IconButton className="addBtn" onClick={addItem} disabled={props.disabled}>
-                <AddIcon style={{backgroundColor: '#2164f1', color: '#FFFFFF'}}/>
+            <IconButton onClick={addItem} disabled={props.disabled}>
+                <AddIcon className="addBtn"/>
             </IconButton>
         </div>
     );

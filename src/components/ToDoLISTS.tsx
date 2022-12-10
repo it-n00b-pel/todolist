@@ -30,19 +30,16 @@ const ToDoLists = () => {
     }
     return (
         <div className="App">
-            <div style={{display:'flex'}}>
-                <div>
-                    {isLoggedIn
-                        && <IconButton className="" size="medium" color="secondary" style={{height: '50px', width:"50px"}}>
-                            <Logout onClick={() => (dispatch(logoutTC()))}/>
-                        </IconButton>}
-                </div>
-                <div className="main_input"><AddItemForm addItem={addNewToDoList}/></div>
+            <div className={'rightBlock'}>
+                {isLoggedIn && <IconButton color="secondary">
+                    <Logout onClick={() => (dispatch(logoutTC()))}/>
+                </IconButton>}
+                <div className="main_input"><AddItemForm addItem={addNewToDoList} label={'ToDoList'}/></div>
             </div>
-            <div className="todoLISTS" >
+            <div className="todoLISTS">
                 {toDoLists.map((t) => {
                     return <Grid className="TodoItem" item key={t.id}>
-                        <Paper className={'todoPaper'} elevation={8} style={{boxShadow:"5px 5px 5px 6px grey"}}>
+                        <Paper className={'todoPaper'} elevation={8} style={{boxShadow: '5px 5px 5px 6px grey'}}>
                             <ToDoList toDoList={t} key={t.id} toDoListID={t.id}/>
                         </Paper>
                     </Grid>;

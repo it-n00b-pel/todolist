@@ -29,7 +29,7 @@ const Task = memo((props: TaskPropsType) => {
         dispatch(ChangeTaskStatusTC(props.ToDoListID, props.task.id, newTaskStatus ? TaskStatus.Completed : TaskStatus.New));
     }, [dispatch, props.ToDoListID, props.task.id]);
     return (
-        <div style={{display: 'flex', fontSize: '22px', fontWeight: '600', alignItems: 'center'}}>
+        <div className={'task'}>
             {props.task.entityStatus === 'loading' ?
                 <CircularProgress style={{margin: '3px'}} color="inherit" size={18}/>
                 :

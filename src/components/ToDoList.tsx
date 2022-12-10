@@ -65,8 +65,7 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
     }, [toDoListID, dispatch]);
 
     return (
-        <div >
-
+        <div>
             <h2 className={s.toDoListTitle}>
                 <EditableSpan value={toDoList.title}
                               onChange={changeToDoListTitle}/>
@@ -80,24 +79,23 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
                 <AddItemForm
                     addItem={addTask}
                     disabled={toDoList.entityStatus === 'loading'}
+                    label={'Task'}
                 />
             </div>
-            <div style={{maxHeight:'270px',overflowY:'scroll'}}>
+            <div className={'tasks'}>
                 {tasks ? tasks.map(t => {
                         return <Task key={t.id}
                                      ToDoListID={toDoListID}
-                                     task={t}
-                        />;
+                                     task={t}/>;
                     })
                     : null}
             </div>
 
-            <ButtonGroup className="buttons" variant="contained"
-                         style={{marginTop: '20px', width: '100%'}}>
-                <Button style={{width: '33%'}} color={'info'} onClick={changeFilterTypeToAll}>All</Button>
-                <Button style={{width: '33%'}} color={'success'}
+            <ButtonGroup className="buttons" variant="contained">
+                <Button className={toDoList.filter === 'all' ? 'act' : ''} style={{width: '33%'}} color={'info'} onClick={changeFilterTypeToAll}>All</Button>
+                <Button className={toDoList.filter === 'completed' ? 'act' : ''} style={{width: '33%'}} color={'success'}
                         onClick={changeFilterTypeToCompleted}>Completed</Button>
-                <Button className={toDoList.filter==="active"?"act":""} style={{width: '33%'}} color={'error'} onClick={changeFilterTypeToActive}>Active</Button>
+                <Button className={toDoList.filter === 'active' ? 'act' : ''} style={{width: '33%'}} color={'error'} onClick={changeFilterTypeToActive}>Active</Button>
             </ButtonGroup>
         </div>
     );
