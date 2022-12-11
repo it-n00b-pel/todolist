@@ -40,14 +40,14 @@ const ToDoLists = () => {
             </div>
             <div className="todoLISTS">
                 {toDoLists.map((t) => {
-                    return <Draggable handle="strong">
+                    return <Draggable handle="strong" bounds={'parent'} key={t.id}>
                         <div style={{display: 'flex', flexDirection: 'column'}}>
                             <Grid className="TodoItem" item key={t.id}>
-                                <strong>
+
                                     <Paper className={'todoPaper'} elevation={8} style={{boxShadow: '5px 5px 5px 6px grey'}}>
                                         <ToDoList toDoList={t} key={t.id} toDoListID={t.id}/>
                                     </Paper>
-                                </strong>
+
                             </Grid>
                         </div>
                     </Draggable>;

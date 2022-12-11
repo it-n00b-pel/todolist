@@ -8,6 +8,7 @@ import {useAppDispatch} from '../store/store';
 import {TaskStatus} from '../store/ENUM/ENUM';
 import CircularProgress from '@mui/material/CircularProgress';
 import {DomainTaskType} from '../store/initialState/initialState';
+import Draggable from 'react-draggable';
 
 export type TaskPropsType = {
     ToDoListID: string
@@ -29,21 +30,24 @@ const Task = memo((props: TaskPropsType) => {
         dispatch(ChangeTaskStatusTC(props.ToDoListID, props.task.id, newTaskStatus ? TaskStatus.Completed : TaskStatus.New));
     }, [dispatch, props.ToDoListID, props.task.id]);
     return (
-        <div className={'task'}>
-            {props.task.entityStatus === 'loading' ?
-                <CircularProgress style={{margin: '3px'}} color="inherit" size={18}/>
-                :
-                <Checkbox
-                    checked={props.task.status === TaskStatus.Completed}
-                    color="primary"
-                    onChange={changeStatusTask}
-                />
-            }
-            <EditableSpan value={props.task.title} onChange={changeTitleTask} taskStatus={props.task.status}/>
-            <IconButton onClick={deleteTask} disabled={props.task.entityStatus === 'loading'}>
-                <Delete/>
-            </IconButton>
-        </div>
+        <Draggable axis={'y'} bounds='parent'>
+            <div className={'task'}>
+                {props.task.entityStatus === 'loading' ?
+                    <CircularProgress style={{margin: '3px'}} color="inherit" size={18}/>
+                    :
+                    <Checkbox
+                        checked={props.task.status === TaskStatus.Completed}
+                        color="primary"
+                        onChange={changeStatusTask}
+                    />
+                }
+                <EditableSpan value={props.task.title} onChange={changeTitleTask} taskStatus={props.task.status}/>
+                <IconButton onClick={deleteTask} disabled={props.task.entityStatus === 'loading'}>
+                    <Delete/>
+                </IconButton>
+            </div>
+        </Draggable>
+
     );
 });
 

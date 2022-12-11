@@ -18,6 +18,7 @@
 }
 
 .todoLISTS {
+    position: relative;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -35,7 +36,7 @@
 }
 
 .tasks {
-    max-height: 270px;
+    max-height: 500px;
     overflow-y: scroll;
 }
 
@@ -71,6 +72,11 @@
     overflow: hidden;
     padding: 5px;
     text-overflow: ellipsis;
+}
+
+.draggingListItem {
+    top: auto !important;
+    left: auto !important;
 }
 
 .taskComplete {

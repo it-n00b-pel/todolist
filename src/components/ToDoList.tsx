@@ -8,12 +8,12 @@ import {FilterType} from '../store/actions/ActionsForToDoList';
 import s from '../ToDoListStyle.module.css';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {deleteToDoListTC, updateToDoListTC} from '../store/reducers/toDoListReducer';
-import Task from './Task';
 import {AddNewTaskTC, fetchTasks} from '../store/reducers/tasksReducer';
 import {TaskStatus} from '../store/ENUM/ENUM';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import DraggableTasksList from './DraggableTasksList';
 
 export type ToDoListPropsType = {
     toDoListID: string
@@ -64,16 +64,21 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
         dispatch(updateToDoListTC(toDoListID, title));
     }, [toDoListID, dispatch]);
 
+
+
     return (
         <div>
-            <h2 className={s.toDoListTitle}>
-                <EditableSpan value={toDoList.title}
-                              onChange={changeToDoListTitle}/>
+            <strong>
+                <h2 className={s.toDoListTitle}>
+                    <EditableSpan value={toDoList.title}
+                                  onChange={changeToDoListTitle}/>
 
-                <IconButton onClick={removeToDoList} disabled={toDoList.entityStatus === 'loading'}>
-                    <DeleteOutlineIcon className={s.deleteIcon}/>
-                </IconButton>
-            </h2>
+                    <IconButton onClick={removeToDoList} disabled={toDoList.entityStatus === 'loading'}>
+                        <DeleteOutlineIcon className={s.deleteIcon}/>
+                    </IconButton>
+                </h2>
+            </strong>
+
 
             <div className={s.toDoListAddForm}>
                 <AddItemForm
@@ -83,14 +88,7 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
                 />
             </div>
             <div className={'tasks'}>
-                {tasks ? tasks.map((t) => (
-                        <Task key={t.id}
-                              ToDoListID={toDoListID}
-                              task={t}/>
-
-                    ))
-                    : null
-                }
+                <DraggableTasksList tasks={tasks} toDoListID={toDoListID}/>
             </div>
 
 
