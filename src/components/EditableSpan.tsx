@@ -32,6 +32,6 @@ export const EditableSpan = memo((props: EditableSpanPropsType) => {
     return editMode
         ? <TextField value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode}
                      onKeyPress={onKeyPressHandler}/>
-        : <p className={props.taskStatus === TaskStatus.Completed ? 'taskComplete taskTitle' : 'taskTitle'} onDoubleClick={activateEditMode}>{props.value} </p>;
+        : <p className={props.taskStatus === TaskStatus.Completed ? 'taskComplete taskTitle' : 'taskTitle'} onDoubleClick={activateEditMode}>{props.value}  </p>;
 });
 

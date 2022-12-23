@@ -67,8 +67,8 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
 
 
     return (
-        <div>
-            <strong>
+        <div >
+            <strong style={{cursor:'grab'}}>
                 <h2 className={s.toDoListTitle}>
                     <EditableSpan value={toDoList.title}
                                   onChange={changeToDoListTitle}/>

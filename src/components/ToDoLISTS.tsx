@@ -44,9 +44,9 @@ const ToDoLists = () => {
                         <div style={{display: 'flex', flexDirection: 'column'}}>
                             <Grid className="TodoItem" item key={t.id}>
 
-                                    <Paper className={'todoPaper'} elevation={8} style={{boxShadow: '5px 5px 5px 6px grey'}}>
-                                        <ToDoList toDoList={t} key={t.id} toDoListID={t.id}/>
-                                    </Paper>
+                                <Paper className={'todoPaper'} elevation={8} style={{boxShadow: '5px 5px 5px 6px #01340AC7'}}>
+                                    <ToDoList toDoList={t} key={t.id} toDoListID={t.id}/>
+                                </Paper>
 
                             </Grid>
                         </div>
