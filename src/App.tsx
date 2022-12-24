@@ -6,8 +6,8 @@ import AppLoader from './components/AppLoader';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {Login} from './components/Login/Login';
 import ToDoLISTS from './components/ToDoLISTS';
-import {initializeAppTC} from './store/reducers/appReducer';
 import CircularProgress from '@mui/material/CircularProgress';
+import {initializeApp} from './store/reducers/saga/appSaga';
 
 function App() {
     console.log('APP');
@@ -16,7 +16,7 @@ function App() {
     const isInitialized = useAppSelector(state => state.app.isInitialized);
     const error = useAppSelector(state => state.app.error);
     useEffect(() => {
-        dispatch(initializeAppTC());
+        dispatch(initializeApp());
     }, [dispatch]);
 
     if (!isInitialized) {

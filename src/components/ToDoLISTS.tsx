@@ -33,8 +33,8 @@ const ToDoLists = () => {
     return (
         <div className="App">
             <div className={'rightBlock'}>
-                {isLoggedIn && <IconButton color="secondary">
-                    <Logout onClick={() => (dispatch(logOut()))}/>
+                {isLoggedIn && <IconButton color="secondary" onClick={() => (dispatch(logOut()))}>
+                    <Logout/>
                 </IconButton>}
                 <div className="main_input"><AddItemForm addItem={addNewToDoList} label={'ToDoList'}/></div>
             </div>
@@ -43,7 +43,6 @@ const ToDoLists = () => {
                     return <Draggable handle="strong" bounds={'parent'} key={t.id}>
                         <div style={{display: 'flex', flexDirection: 'column'}}>
                             <Grid className="TodoItem" item key={t.id}>
-
                                 <Paper className={'todoPaper'} elevation={8} style={{boxShadow: '5px 5px 5px 6px #01340AC7'}}>
                                     <ToDoList toDoList={t} key={t.id} toDoListID={t.id}/>
                                 </Paper>

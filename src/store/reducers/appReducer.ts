@@ -1,8 +1,4 @@
 import {ACTION_TYPE} from '../ENUM/ENUM';
-import {authApi} from '../../api/ToDoListAPI';
-import {setIsLoggedInAC} from './auth-reducer';
-import {AppThunk} from '../store';
-import {handleServerAppError, handleServerNetworkError} from './saga/error-utilsSaga';
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -48,23 +44,6 @@ export const setIsInitializedAC = (isInitialized: boolean) => ({
     isInitialized
 } as const);
 
-export const initializeAppTC = (): AppThunk => (dispatch) => {
-    authApi.me()
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC(true));
-                dispatch(setIsInitializedAC(true));
-            } else {
-                handleServerAppError(res.data);
-            }
-        })
-        .catch((error) => {
-            handleServerNetworkError(error);
-        })
-        .finally(() => {
-            dispatch(setIsInitializedAC(true));
-        });
-};
 
 export type ActionTypesForAppPreloader =
     | ReturnType<typeof setPreloaderStatusAC>

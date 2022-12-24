@@ -41,7 +41,7 @@ export const authApi = {
     login(data: LoginParamsType): Promise<AxiosResponse<ResponseType<{ userId: number }>>> {
         return instance.post<ResponseType<{ userId: number }>>('/auth/login', data);
     },
-    me() {
+    me(): Promise<AxiosResponse<ResponseType<{ data: LoginParamsType }>>> {
         return instance.get<ResponseType<{ data: LoginParamsType }>>(`/auth/me`);
     },
     logout(): Promise<AxiosResponse<ResponseType>> {

@@ -9,6 +9,7 @@ import createSagaMiddleware from 'redux-saga';
 import {all} from '@redux-saga/core/effects';
 import {errorWatcher} from './reducers/saga/error-utilsSaga';
 import {ActionTypeAuthSaga, authWatcher} from './reducers/saga/authSaga';
+import {ActionTypeAppSaga, initializeAppWatcher} from './reducers/saga/appSaga';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -20,12 +21,14 @@ const rootReducer = combineReducers({
 });
 
 function* rootWatcher() {
-    yield all([errorWatcher(), authWatcher()]);
+    yield all([errorWatcher(),
+        authWatcher(),
+        initializeAppWatcher()]);
 }
 
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware, sagaMiddleware));
 sagaMiddleware.run(rootWatcher);
-type AppActionsType = ActionTypesForToDoLists | ActionTypesForTasks | ActionTypesForAppPreloader | ActionsTypeForAuth | ActionTypeAuthSaga
+type AppActionsType = ActionTypesForToDoLists | ActionTypesForTasks | ActionTypesForAppPreloader | ActionsTypeForAuth | ActionTypeAuthSaga | ActionTypeAppSaga
 
 export type AppRootStateType = ReturnType<typeof store.getState>
 export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AppActionsType>
