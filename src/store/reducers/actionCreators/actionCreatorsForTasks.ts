@@ -6,9 +6,9 @@ import {
     SetEntityTaskStatusAT,
     SetTasksAT
 } from '../actions/ActionsForTasks';
-import {ACTION_TYPE, TaskStatus} from '../ENUM/ENUM';
-import {TaskType} from '../../api/ToDoListAPI';
-import {RequestStatusType} from '../reducers/appReducer';
+import {ACTION_TYPE, TaskStatus} from '../../ENUM/ENUM';
+import {TaskType} from '../../../api/ToDoListAPI';
+import {RequestStatusType} from '../appReducer';
 
 export const AddNewTask = (task: TaskType): AddNewTaskAT => {
     return {

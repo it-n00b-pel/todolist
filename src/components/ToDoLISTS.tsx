@@ -7,8 +7,8 @@ import ToDoList from './ToDoList';
 import {Navigate} from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import {Logout} from '@mui/icons-material';
-import {logoutTC} from '../store/reducers/auth-reducer';
 import Draggable from 'react-draggable';
+import {logOut} from '../store/reducers/saga/authSaga';
 
 const ToDoLists = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
@@ -34,7 +34,7 @@ const ToDoLists = () => {
         <div className="App">
             <div className={'rightBlock'}>
                 {isLoggedIn && <IconButton color="secondary">
-                    <Logout onClick={() => (dispatch(logoutTC()))}/>
+                    <Logout onClick={() => (dispatch(logOut()))}/>
                 </IconButton>}
                 <div className="main_input"><AddItemForm addItem={addNewToDoList} label={'ToDoList'}/></div>
             </div>

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 import {TaskStatus} from '../store/ENUM/ENUM';
 
 const instance = axios.create({
@@ -11,7 +11,7 @@ const instance = axios.create({
 
 export const toDoListAPI = {
     getToDoLists() {
-        return instance.get<ToDoListType[]>('todo-lists',);
+        return instance.get<ToDoListType[]>('todo-lists');
     },
     deleteToDoList(toDoListID: string) {
         return instance.delete<ResponseType>(`todo-lists/${toDoListID}`);
@@ -33,20 +33,20 @@ export const toDoListAPI = {
     },
     updateTask(toDoListID: string, taskID: string, task: TaskType) {
         return instance.put<ResponseType<{ item: TaskType }>>(`todo-lists/${toDoListID}/tasks/${taskID}/`, task);
-    }
+    },
 
 };
 
 export const authApi = {
-    login(data: LoginParamsType) {
+    login(data: LoginParamsType): Promise<AxiosResponse<ResponseType<{ userId: number }>>> {
         return instance.post<ResponseType<{ userId: number }>>('/auth/login', data);
     },
     me() {
         return instance.get<ResponseType<{ data: LoginParamsType }>>(`/auth/me`);
     },
-    logout() {
+    logout(): Promise<AxiosResponse<ResponseType>> {
         return instance.delete<ResponseType>(`/auth/login`);
-    }
+    },
 };
 
 export type ResponseType<T = {}> = {

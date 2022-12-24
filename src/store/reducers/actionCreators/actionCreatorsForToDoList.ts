@@ -6,9 +6,9 @@ import {
     RemoveToDoListAT, SetEntityStatusToDoListAT,
     SetToDoListsAT
 } from '../actions/ActionsForToDoList';
-import {ACTION_TYPE} from '../ENUM/ENUM';
-import {ToDoListType} from '../../api/ToDoListAPI';
-import {RequestStatusType} from '../reducers/appReducer';
+import {ACTION_TYPE} from '../../ENUM/ENUM';
+import {ToDoListType} from '../../../api/ToDoListAPI';
+import {RequestStatusType} from '../appReducer';
 
 export const AddNewToDoList = (toDoList: ToDoListType): AddNewToDoListAT => {
     return {

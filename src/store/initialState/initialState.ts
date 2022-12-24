@@ -1,4 +1,4 @@
-import {FilterType} from '../actions/ActionsForToDoList';
+import {FilterType} from '../reducers/actions/ActionsForToDoList';
 import {TaskType, ToDoListType} from '../../api/ToDoListAPI';
 import {RequestStatusType} from '../reducers/appReducer';
 

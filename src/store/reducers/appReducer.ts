@@ -2,7 +2,7 @@ import {ACTION_TYPE} from '../ENUM/ENUM';
 import {authApi} from '../../api/ToDoListAPI';
 import {setIsLoggedInAC} from './auth-reducer';
 import {AppThunk} from '../store';
-import {handleServerAppError, handleServerNetworkError} from '../../utils-error/error-utils';
+import {handleServerAppError, handleServerNetworkError} from './saga/error-utilsSaga';
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -30,7 +30,7 @@ export const appReducer = (state: AppInitialStateType = initialState, action: Ac
     }
 };
 
-export const SetPreloaderStatusAC = (status: RequestStatusType) => {
+export const setPreloaderStatusAC = (status: RequestStatusType) => {
     return {
         type: ACTION_TYPE.SET_PRELOADER_STATUS,
         status,
@@ -55,11 +55,11 @@ export const initializeAppTC = (): AppThunk => (dispatch) => {
                 dispatch(setIsLoggedInAC(true));
                 dispatch(setIsInitializedAC(true));
             } else {
-                handleServerAppError(res.data, dispatch);
+                handleServerAppError(res.data);
             }
         })
         .catch((error) => {
-            handleServerNetworkError(error, dispatch);
+            handleServerNetworkError(error);
         })
         .finally(() => {
             dispatch(setIsInitializedAC(true));
@@ -67,7 +67,7 @@ export const initializeAppTC = (): AppThunk => (dispatch) => {
 };
 
 export type ActionTypesForAppPreloader =
-    | ReturnType<typeof SetPreloaderStatusAC>
+    | ReturnType<typeof setPreloaderStatusAC>
     | ReturnType<typeof SetAppErrorAC>
     | ReturnType<typeof setIsInitializedAC>
 

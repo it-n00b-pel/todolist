@@ -6,7 +6,7 @@ import {
     RemoveTaskAT,
     SetEntityTaskStatusAT,
     SetTasksAT
-} from '../actions/ActionsForTasks';
+} from './actions/ActionsForTasks';
 import {ACTION_TYPE, TaskStatus} from '../ENUM/ENUM';
 import {AppThunk} from '../store';
 import {TaskType, toDoListAPI} from '../../api/ToDoListAPI';
@@ -17,11 +17,12 @@ import {
     RemoveTask,
     SetEntityTaskStatus,
     SetTasks
-} from '../actionCreators/actionCreatorsForTasks';
-import {AddNewToDoListAT, RemoveToDoListAT} from '../actions/ActionsForToDoList';
-import {SetPreloaderStatusAC} from './appReducer';
-import {SetEntityStatusToDoList} from '../actionCreators/actionCreatorsForToDoList';
-import {handleServerAppError, handleServerNetworkError} from '../../utils-error/error-utils';
+} from './actionCreators/actionCreatorsForTasks';
+import {AddNewToDoListAT, RemoveToDoListAT} from './actions/ActionsForToDoList';
+import {setPreloaderStatusAC} from './appReducer';
+import {SetEntityStatusToDoList} from './actionCreators/actionCreatorsForToDoList';
+import {handleServerAppError, handleServerNetworkError} from './saga/error-utilsSaga';
+
 
 export type ActionTypesForTasks =
     AddNewTaskAT
@@ -90,53 +91,53 @@ export const tasksReducer = (state = initialStateTask, action: ActionTypesForTas
 //          ---         THUNK FOR TASKS           ---
 
 export const fetchTasks = (toDoListID: string): AppThunk => (dispatch) => {
-    dispatch(SetPreloaderStatusAC('loading'));
+    dispatch(setPreloaderStatusAC('loading'));
     toDoListAPI.getTasks(toDoListID)
         .then(res => {
             const tasks = res.data.items;
             dispatch(SetTasks(toDoListID, tasks));
-            dispatch(SetPreloaderStatusAC('succeeded'));
+            dispatch(setPreloaderStatusAC('succeeded'));
         })
         .catch(error => {
-            handleServerNetworkError(error, dispatch);
+            handleServerNetworkError(error);
         });
 };
 export const AddNewTaskTC = (toDoListID: string, title: string): AppThunk => (dispatch) => {
     dispatch(SetEntityStatusToDoList(toDoListID, 'loading'));
-    dispatch(SetPreloaderStatusAC('loading'));
+    dispatch(setPreloaderStatusAC('loading'));
     toDoListAPI.addNewTask(toDoListID, title)
         .then(res => {
             if (res.data.resultCode === 0) {
                 const newTask = res.data.data.item;
                 dispatch(AddNewTask(newTask));
-                dispatch(SetPreloaderStatusAC('succeeded'));
+                dispatch(setPreloaderStatusAC('succeeded'));
                 dispatch(SetEntityStatusToDoList(toDoListID, 'succeeded'));
             } else {
-                handleServerAppError(res.data, dispatch);
+                handleServerAppError(res.data);
                 dispatch(SetEntityStatusToDoList(toDoListID, 'failed'));
             }
         })
         .catch(error => {
-            handleServerNetworkError(error, dispatch, toDoListID);
+            handleServerNetworkError(error,  toDoListID);
         });
 };
 
 export const DeleteTaskTC = (toDoListID: string, taskID: string): AppThunk => (dispatch) => {
-    dispatch(SetPreloaderStatusAC('loading'));
+    dispatch(setPreloaderStatusAC('loading'));
     dispatch(SetEntityTaskStatus(toDoListID, taskID, 'loading'));
     toDoListAPI.deleteTask(toDoListID, taskID)
         .then((res) => {
             if (res.data.resultCode === 0) {
                 dispatch(RemoveTask(toDoListID, taskID));
-                dispatch(SetPreloaderStatusAC('succeeded'));
+                dispatch(setPreloaderStatusAC('succeeded'));
                 dispatch(SetEntityTaskStatus(toDoListID, taskID, 'succeeded'));
             } else {
-                handleServerAppError(res.data, dispatch);
+                handleServerAppError(res.data);
                 dispatch(SetEntityTaskStatus(toDoListID, taskID, 'failed'));
             }
         })
         .catch(error => {
-            handleServerNetworkError(error, dispatch, toDoListID, taskID);
+            handleServerNetworkError(error,  toDoListID, taskID);
         });
 
 };
@@ -146,20 +147,20 @@ export const ChangeTaskTitleTC = (toDoListID: string, taskID: string, title: str
     const task: TaskType | undefined = tasksForCurrentToDoList.find(t => t.id === taskID);
 
     if (task) {
-        dispatch(SetPreloaderStatusAC('loading'));
+        dispatch(setPreloaderStatusAC('loading'));
         toDoListAPI.updateTask(toDoListID, taskID, {
             ...task, title: title
         }).then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(ChangeTitleTask(toDoListID, taskID, title));
-                dispatch(SetPreloaderStatusAC('succeeded'));
+                dispatch(setPreloaderStatusAC('succeeded'));
             } else {
-                handleServerAppError(res.data, dispatch);
+                handleServerAppError(res.data);
                 dispatch(SetEntityTaskStatus(toDoListID, taskID, 'failed'));
             }
         })
             .catch(error => {
-                handleServerNetworkError(error, dispatch, toDoListID, taskID);
+                handleServerNetworkError(error,  toDoListID, taskID);
             });
     }
 };
@@ -170,7 +171,7 @@ export const ChangeTaskStatusTC = (toDoListID: string, taskID: string, status: T
     const task: TaskType | undefined = tasksForCurrentToDoList.find(t => t.id === taskID);
 
     if (task) {
-        dispatch(SetPreloaderStatusAC('loading'));
+        dispatch(setPreloaderStatusAC('loading'));
         dispatch(SetEntityTaskStatus(toDoListID, taskID, 'loading'));
         toDoListAPI.updateTask(toDoListID, taskID, {
             ...task, status: status
@@ -178,15 +179,15 @@ export const ChangeTaskStatusTC = (toDoListID: string, taskID: string, status: T
             .then((res) => {
                 if (res.data.resultCode === 0) {
                     dispatch(ChangeStatusTask(toDoListID, taskID, status));
-                    dispatch(SetPreloaderStatusAC('succeeded'));
+                    dispatch(setPreloaderStatusAC('succeeded'));
                     dispatch(SetEntityTaskStatus(toDoListID, taskID, 'succeeded'));
                 } else {
-                    handleServerAppError(res.data, dispatch);
+                    handleServerAppError(res.data);
                     dispatch(SetEntityTaskStatus(toDoListID, taskID, 'failed'));
                 }
             })
             .catch(error => {
-                handleServerNetworkError(error, dispatch, toDoListID, taskID);
+                handleServerNetworkError(error,  toDoListID, taskID);
             });
     }
 };

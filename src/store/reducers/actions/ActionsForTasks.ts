@@ -1,6 +1,6 @@
-import {ACTION_TYPE, TaskStatus} from '../ENUM/ENUM';
-import {TaskType} from '../../api/ToDoListAPI';
-import {RequestStatusType} from '../reducers/appReducer';
+import {ACTION_TYPE, TaskStatus} from '../../ENUM/ENUM';
+import {TaskType} from '../../../api/ToDoListAPI';
+import {RequestStatusType} from '../appReducer';
 
 export type AddNewTaskAT = {
     type: ACTION_TYPE.ADD_NEW_TASK,

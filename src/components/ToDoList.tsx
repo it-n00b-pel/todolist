@@ -1,10 +1,10 @@
 import React, {memo, useCallback, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../store/store';
 import {ToDoListStateType} from '../store/initialState/initialState';
-import {ChangeToDoListFilter} from '../store/actionCreators/actionCreatorsForToDoList';
+import {ChangeToDoListFilter} from '../store/reducers/actionCreators/actionCreatorsForToDoList';
 import {EditableSpan} from './EditableSpan';
 import AddItemForm from './AddItemForm';
-import {FilterType} from '../store/actions/ActionsForToDoList';
+import {FilterType} from '../store/reducers/actions/ActionsForToDoList';
 import s from '../ToDoListStyle.module.css';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {deleteToDoListTC, updateToDoListTC} from '../store/reducers/toDoListReducer';
