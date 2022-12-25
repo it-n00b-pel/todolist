@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../store/store';
-import {addNewToDoListTC, fetchToDoListsTC} from '../store/reducers/toDoListReducer';
 import AddItemForm from './AddItemForm';
 import {Grid, Paper} from '@mui/material';
 import ToDoList from './ToDoList';
@@ -9,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import {Logout} from '@mui/icons-material';
 import Draggable from 'react-draggable';
 import {logOut} from '../store/reducers/saga/authSaga';
+import {addNewToDoLists, fetchToDoLists} from '../store/reducers/saga/toDoListSaga';
 
 const ToDoLists = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
@@ -19,11 +19,11 @@ const ToDoLists = () => {
         if (!isLoggedIn) {
             return;
         }
-        dispatch(fetchToDoListsTC());
+        dispatch(fetchToDoLists());
     }, [dispatch, isLoggedIn]);
 
     const addNewToDoList = useCallback((title: string) => {
-        dispatch(addNewToDoListTC(title));
+        dispatch(addNewToDoLists(title));
     }, [dispatch]);
 
     if (!isLoggedIn) {
@@ -43,7 +43,7 @@ const ToDoLists = () => {
                     return <Draggable handle="strong" bounds={'parent'} key={t.id}>
                         <div style={{display: 'flex', flexDirection: 'column'}}>
                             <Grid className="TodoItem" item key={t.id}>
-                                <Paper className={'todoPaper'} elevation={8} style={{boxShadow: '5px 5px 5px 6px #01340AC7'}}>
+                                <Paper className={'todoPaper'} elevation={8} style={{boxShadow: '5px 5px 5px 6px #000'}}>
                                     <ToDoList toDoList={t} key={t.id} toDoListID={t.id}/>
                                 </Paper>
 

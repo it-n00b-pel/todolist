@@ -10,7 +10,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import {initializeApp} from './store/reducers/saga/appSaga';
 
 function App() {
-    console.log('APP');
     const dispatch = useAppDispatch();
 
     const isInitialized = useAppSelector(state => state.app.isInitialized);
