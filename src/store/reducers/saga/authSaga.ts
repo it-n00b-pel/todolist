@@ -1,4 +1,4 @@
-import {put, call, takeEvery} from 'redux-saga/effects';
+import {call, put, takeEvery} from 'redux-saga/effects';
 
 import {authApi, LoginParamsType, ResponseType} from '../../../api/ToDoListAPI';
 import {setPreloaderStatusAC} from '../appReducer';

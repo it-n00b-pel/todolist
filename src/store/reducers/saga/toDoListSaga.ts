@@ -81,5 +81,3 @@ export function* toDoListsWatcher() {
     yield takeEvery('TODO-DELETE_TODOLIST', deleteToDoListWorker);
     yield takeEvery('TODO-UPDATE_TODOLISTs_TITLE', updateToDoListsWorker);
 }
-
-// export type ActionTypeToDoListSaga = ReturnType<typeof fetchToDoLists>

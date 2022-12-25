@@ -26,5 +26,3 @@ export function* initializeAppWatcher() {
     yield  takeEvery('APP-INITIALIZE', initializeAppWorker);
 }
 
-export type ActionTypeAppSaga = ReturnType<typeof initializeApp>
-

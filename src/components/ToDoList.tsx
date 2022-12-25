@@ -7,13 +7,13 @@ import AddItemForm from './AddItemForm';
 import {FilterType} from '../store/reducers/actions/ActionsForToDoList';
 import s from '../ToDoListStyle.module.css';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import {AddNewTaskTC, fetchTasks} from '../store/reducers/tasksReducer';
 import {TaskStatus} from '../store/ENUM/ENUM';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import DraggableTasksList from './DraggableTasksList';
 import {DeleteToDoList, UpdateToDoList} from '../store/reducers/saga/toDoListSaga';
+import {AddNewTasks, FetchTasks} from '../store/reducers/saga/taskSaga';
 
 export type ToDoListPropsType = {
     toDoListID: string
@@ -27,7 +27,7 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
     let tasksFromStore = useAppSelector(state => state.tasks[toDoListID]);
 
     useEffect(() => {
-        dispatch(fetchTasks(toDoListID));
+        dispatch(FetchTasks(toDoListID));
     }, [toDoListID, dispatch]);
     const filterTasks = (filter: FilterType) => {
         switch (filter) {
@@ -53,7 +53,7 @@ export const ToDoList = memo(({toDoListID, toDoList}: ToDoListPropsType) => {
     }, [toDoListID, dispatch]);
 
     const addTask = useCallback((title: string) => {
-        dispatch(AddNewTaskTC(toDoListID, title));
+        dispatch(AddNewTasks(toDoListID, title));
     }, [toDoListID, dispatch]);
 
     const removeToDoList = useCallback(() => {

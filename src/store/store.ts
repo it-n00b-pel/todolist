@@ -11,6 +11,7 @@ import {errorWatcher} from './reducers/saga/error-utilsSaga';
 import {ActionTypeAuthSaga, authWatcher} from './reducers/saga/authSaga';
 import {initializeAppWatcher} from './reducers/saga/appSaga';
 import {toDoListsWatcher} from './reducers/saga/toDoListSaga';
+import {tasksWatcher} from './reducers/saga/taskSaga';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -25,7 +26,9 @@ function* rootWatcher() {
     yield all([errorWatcher(),
         authWatcher(),
         initializeAppWatcher(),
-        toDoListsWatcher()]);
+        toDoListsWatcher(),
+        tasksWatcher(),
+    ]);
 }
 
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware, sagaMiddleware));
