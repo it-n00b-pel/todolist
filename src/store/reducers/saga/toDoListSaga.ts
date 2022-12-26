@@ -1,8 +1,11 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
-import {setPreloaderStatusAC} from '../appReducer';
+
 import {AxiosError, AxiosResponse} from 'axios';
+
+import {setPreloaderStatusAC} from '../appReducer';
 import {ResponseType, toDoListAPI, ToDoListType} from '../../../api/ToDoListAPI';
 import {AddNewToDoList, ChangeToDoListTitle, RemoveToDoList, SetEntityStatusToDoList, SetToDoLists} from '../actionCreators/actionCreatorsForToDoList';
+
 import {handleServerAppError, handleServerNetworkError} from './error-utilsSaga';
 
 export const fetchToDoLists = () => ({type: 'TODO-FETCH_TODOLISTS'});

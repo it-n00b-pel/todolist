@@ -4,7 +4,7 @@ import {
     ChangeTaskTitleAT,
     RemoveTaskAT,
     SetEntityTaskStatusAT,
-    SetTasksAT
+    SetTasksAT,
 } from '../actions/ActionsForTasks';
 import {ACTION_TYPE, TaskStatus} from '../../ENUM/ENUM';
 import {TaskType} from '../../../api/ToDoListAPI';
@@ -20,7 +20,7 @@ export const RemoveTask = (toDoListID: string, taskID: string): RemoveTaskAT => 
     return {
         type: ACTION_TYPE.REMOVE_TASK,
         toDoListID,
-        taskID
+        taskID,
     };
 };
 export const ChangeTitleTask = (toDoListID: string, taskID: string, title: string): ChangeTaskTitleAT => {
@@ -28,7 +28,7 @@ export const ChangeTitleTask = (toDoListID: string, taskID: string, title: strin
         type: ACTION_TYPE.CHANGE_TASK_TITLE,
         toDoListID,
         taskID,
-        title
+        title,
     };
 };
 export const ChangeStatusTask = (toDoListID: string, taskID: string, status: TaskStatus): ChangeTaskStatusAT => {
@@ -36,7 +36,7 @@ export const ChangeStatusTask = (toDoListID: string, taskID: string, status: Tas
         type: ACTION_TYPE.CHANGE_TASK_STATUS,
         toDoListID,
         taskID,
-        status
+        status,
     };
 };
 
@@ -53,6 +53,6 @@ export const SetEntityTaskStatus = (toDoListID: string, taskID: string, entitySt
         type: ACTION_TYPE.SET_ENTITY_STATUS_TASK,
         entityStatus,
         toDoListID,
-        taskID
+        taskID,
     };
 };

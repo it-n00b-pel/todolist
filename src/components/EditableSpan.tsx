@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, memo, useCallback, useState} from 'react';
 import TextField from '@material-ui/core/TextField';
+
 import {TaskStatus} from '../store/ENUM/ENUM';
 
 type EditableSpanPropsType = {

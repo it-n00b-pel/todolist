@@ -1,6 +1,8 @@
 import {DomainTaskType, initialStateTask, TaskStateType} from '../initialState/initialState';
-import {AddNewTaskAT, ChangeTaskStatusAT, ChangeTaskTitleAT, RemoveTaskAT, SetEntityTaskStatusAT, SetTasksAT} from './actions/ActionsForTasks';
+
 import {ACTION_TYPE} from '../ENUM/ENUM';
+
+import {AddNewTaskAT, ChangeTaskStatusAT, ChangeTaskTitleAT, RemoveTaskAT, SetEntityTaskStatusAT, SetTasksAT} from './actions/ActionsForTasks';
 import {AddNewToDoListAT, RemoveToDoListAT} from './actions/ActionsForToDoList';
 
 export type ActionTypesForTasks =

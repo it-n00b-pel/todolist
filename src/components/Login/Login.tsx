@@ -8,11 +8,16 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from 'formik';
-import {useAppDispatch, useAppSelector} from '../../store/store';
+
 import {Navigate} from 'react-router-dom';
-import s from './Login.module.css';
+
+import {useAppDispatch, useAppSelector} from '../../store/store';
+
+
 import {setPreloaderStatusAC} from '../../store/reducers/appReducer';
 import {login} from '../../store/reducers/saga/authSaga';
+
+import s from './Login.module.css';
 
 type FormikErrorType = {
     email?: string
@@ -28,7 +33,7 @@ export const Login = () => {
         initialValues: {
             email: '',
             password: '',
-            rememberMe: true
+            rememberMe: true,
         },
         validate: values => {
             const errors: FormikErrorType = {};
@@ -49,7 +54,7 @@ export const Login = () => {
             // alert(JSON.stringify(values));.
             dispatch(login({email: values.email, password: values.password}));
             formik.resetForm();
-        }
+        },
     });
     if (isLoggedIn) return <Navigate to="/"/>;
 

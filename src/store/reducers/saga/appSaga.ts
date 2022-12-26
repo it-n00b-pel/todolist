@@ -1,9 +1,12 @@
 import {AxiosError, AxiosResponse} from 'axios';
 import {call, put, takeEvery} from 'redux-saga/effects';
+
 import {authApi, LoginParamsType, ResponseType} from '../../../api/ToDoListAPI';
 import {setIsLoggedInAC} from '../auth-reducer';
-import {handleServerNetworkError} from './error-utilsSaga';
+
 import {setIsInitializedAC} from '../appReducer';
+
+import {handleServerNetworkError} from './error-utilsSaga';
 
 export const initializeApp = () => ({type: 'APP-INITIALIZE'});
 

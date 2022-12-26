@@ -1,9 +1,11 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
 
+import {AxiosError, AxiosResponse} from 'axios';
+
 import {authApi, LoginParamsType, ResponseType} from '../../../api/ToDoListAPI';
 import {setPreloaderStatusAC} from '../appReducer';
-import {AxiosError, AxiosResponse} from 'axios';
 import {setIsLoggedInAC} from '../auth-reducer';
+
 import {handleServerAppError, handleServerNetworkError} from './error-utilsSaga';
 
 export const login = (data: LoginParamsType) => ({type: 'AUTH-LOGIN', data});

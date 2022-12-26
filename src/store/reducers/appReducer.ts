@@ -5,7 +5,7 @@ export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 const initialState = {
     status: 'loading' as RequestStatusType,
     error: null as string | null,
-    isInitialized: false
+    isInitialized: false,
 };
 
 type AppInitialStateType = typeof initialState
@@ -26,6 +26,8 @@ export const appReducer = (state: AppInitialStateType = initialState, action: Ac
     }
 };
 
+// actions
+
 export const setPreloaderStatusAC = (status: RequestStatusType) => {
     return {
         type: ACTION_TYPE.SET_PRELOADER_STATUS,
@@ -41,9 +43,10 @@ export const SetAppErrorAC = (error: string | null) => {
 };
 export const setIsInitializedAC = (isInitialized: boolean) => ({
     type: ACTION_TYPE.SET_APP_INITIALIZED,
-    isInitialized
+    isInitialized,
 } as const);
 
+// types
 
 export type ActionTypesForAppPreloader =
     | ReturnType<typeof setPreloaderStatusAC>

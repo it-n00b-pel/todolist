@@ -1,9 +1,12 @@
-import {ResponseType} from '../../../api/ToDoListAPI';
 import {put, takeEvery} from 'redux-saga/effects';
+
+import {AxiosError} from 'axios';
+
+import {ResponseType} from '../../../api/ToDoListAPI';
 import {SetAppErrorAC, setPreloaderStatusAC} from '../appReducer';
 import {SetEntityStatusToDoList} from '../actionCreators/actionCreatorsForToDoList';
 import {SetEntityTaskStatus} from '../actionCreators/actionCreatorsForTasks';
-import {AxiosError} from 'axios';
+
 
 export const handleServerAppError = <T>(data: ResponseType<T>) => ({type: 'ERROR-APP_ERROR', data});
 

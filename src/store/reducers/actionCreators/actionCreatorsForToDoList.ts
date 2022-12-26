@@ -4,7 +4,7 @@ import {
     ChangeTitleToDoListAT,
     FilterType,
     RemoveToDoListAT, SetEntityStatusToDoListAT,
-    SetToDoListsAT
+    SetToDoListsAT,
 } from '../actions/ActionsForToDoList';
 import {ACTION_TYPE} from '../../ENUM/ENUM';
 import {ToDoListType} from '../../../api/ToDoListAPI';
@@ -13,7 +13,7 @@ import {RequestStatusType} from '../appReducer';
 export const AddNewToDoList = (toDoList: ToDoListType): AddNewToDoListAT => {
     return {
         type: ACTION_TYPE.ADD_NEW_TODOLIST,
-        toDoList
+        toDoList,
     };
 };
 export const RemoveToDoList = (toDoListID: string): RemoveToDoListAT => {
@@ -39,13 +39,13 @@ export const ChangeToDoListFilter = (toDoListID: string, filter: FilterType): Ch
 export const SetToDoLists = (toDoLists: ToDoListType[]): SetToDoListsAT => {
     return {
         type: ACTION_TYPE.SET_TODOLISTS,
-        toDoLists
+        toDoLists,
     };
 };
 export const SetEntityStatusToDoList = (toDoListID: string, entityStatus: RequestStatusType): SetEntityStatusToDoListAT => {
     return {
         type: ACTION_TYPE.SET_ENTITY_STATUS_TODOLIST,
         toDoListID,
-        entityStatus
+        entityStatus,
     };
 };

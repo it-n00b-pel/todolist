@@ -1,7 +1,7 @@
 import {ACTION_TYPE} from '../ENUM/ENUM';
 
 const initialState = {
-    isLoggedIn: false
+    isLoggedIn: false,
 };
 
 type InitialStateType = typeof initialState

@@ -1,6 +1,8 @@
 import {initialStateToDoLists, ToDoListStateType} from '../initialState/initialState';
-import {AddNewToDoListAT, ChangeFilterToDoListAT, ChangeTitleToDoListAT, RemoveToDoListAT, SetEntityStatusToDoListAT, SetToDoListsAT} from './actions/ActionsForToDoList';
+
 import {ACTION_TYPE} from '../ENUM/ENUM';
+
+import {AddNewToDoListAT, ChangeFilterToDoListAT, ChangeTitleToDoListAT, RemoveToDoListAT, SetEntityStatusToDoListAT, SetToDoListsAT} from './actions/ActionsForToDoList';
 
 export type ActionTypesForToDoLists =
     AddNewToDoListAT

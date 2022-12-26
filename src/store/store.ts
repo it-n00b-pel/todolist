@@ -1,12 +1,21 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
+
+import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
+
+import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
+
+import createSagaMiddleware from 'redux-saga';
+
+import {all} from '@redux-saga/core/effects';
+
 import {ActionTypesForToDoLists, toDoListReducer} from './reducers/toDoListReducer';
 import {ActionTypesForTasks, tasksReducer} from './reducers/tasksReducer';
-import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
-import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
+
+
 import {ActionTypesForAppPreloader, appReducer} from './reducers/appReducer';
 import {ActionsTypeForAuth, authReducer} from './reducers/auth-reducer';
-import createSagaMiddleware from 'redux-saga';
-import {all} from '@redux-saga/core/effects';
+
+
 import {errorWatcher} from './reducers/saga/error-utilsSaga';
 import {ActionTypeAuthSaga, authWatcher} from './reducers/saga/authSaga';
 import {initializeAppWatcher} from './reducers/saga/appSaga';

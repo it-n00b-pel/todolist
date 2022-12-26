@@ -1,13 +1,16 @@
 import {call, put, takeEvery, select} from 'redux-saga/effects';
-import {setPreloaderStatusAC} from '../appReducer';
-import {GetTaskResponse, ResponseType, TaskType, toDoListAPI} from '../../../api/ToDoListAPI';
-import {AddNewTask, ChangeStatusTask, ChangeTitleTask, RemoveTask, SetEntityTaskStatus, SetTasks} from '../actionCreators/actionCreatorsForTasks';
-import {handleServerAppError, handleServerNetworkError} from './error-utilsSaga';
+
 import {AxiosError, AxiosResponse} from 'axios';
+
+import {AddNewTask, ChangeStatusTask, ChangeTitleTask, RemoveTask, SetEntityTaskStatus, SetTasks} from '../actionCreators/actionCreatorsForTasks';
+import {GetTaskResponse, ResponseType, TaskType, toDoListAPI} from '../../../api/ToDoListAPI';
+import {setPreloaderStatusAC} from '../appReducer';
 import {SetEntityStatusToDoList} from '../actionCreators/actionCreatorsForToDoList';
 import {AppRootStateType} from '../../store';
 import {TaskStateType} from '../../initialState/initialState';
 import {TaskStatus} from '../../ENUM/ENUM';
+
+import {handleServerAppError, handleServerNetworkError} from './error-utilsSaga';
 
 export const FetchTasks = (toDoListID: string) => ({type: 'TASKS-FETCH_TASKS', toDoListID});
 
