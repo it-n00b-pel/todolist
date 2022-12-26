@@ -35,4 +35,3 @@ export const EditableSpan = memo((props: EditableSpanPropsType) => {
                      onKeyPress={onKeyPressHandler}/>
         : <p className={props.taskStatus === TaskStatus.Completed ? 'taskComplete taskTitle' : 'taskTitle'} onDoubleClick={activateEditMode}>{props.value}  </p>;
 });
-

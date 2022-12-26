@@ -45,7 +45,7 @@ const ToDoLists = () => {
 
             <div className="todoLISTS">
                 {toDoLists.map((t) => {
-                    return <div>
+                    return <div key={t.id}>
                         <Grid item key={t.id}>
                             <Paper className={'todoPaper'} elevation={8} style={{boxShadow: '5px 5px 5px 6px #000'}}>
                                 <ToDoList toDoList={t} key={t.id} toDoListID={t.id}/>
