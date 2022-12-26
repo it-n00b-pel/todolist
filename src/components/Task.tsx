@@ -1,13 +1,17 @@
 import React, {ChangeEvent, memo, useCallback} from 'react';
 import IconButton from '@mui/material/IconButton';
 import Checkbox from '@mui/material/Checkbox';
-import {EditableSpan} from './EditableSpan';
+
 import {Delete} from '@material-ui/icons';
-import {ChangeTaskStatusTC, ChangeTaskTitleTC, DeleteTaskTC} from '../store/reducers/tasksReducer';
+
+import CircularProgress from '@mui/material/CircularProgress';
+
 import {useAppDispatch} from '../store/store';
 import {TaskStatus} from '../store/ENUM/ENUM';
-import CircularProgress from '@mui/material/CircularProgress';
 import {DomainTaskType} from '../store/initialState/initialState';
+import {ChangeTaskStatus, ChangeTaskTitle, DeleteTask} from '../store/reducers/saga/taskSaga';
+
+import {EditableSpan} from './EditableSpan';
 
 export type TaskPropsType = {
     ToDoListID: string
@@ -15,19 +19,21 @@ export type TaskPropsType = {
 }
 
 const Task = memo((props: TaskPropsType) => {
-    console.log('TASK');
     const dispatch = useAppDispatch();
 
     const changeTitleTask = useCallback((title: string) => {
-        dispatch(ChangeTaskTitleTC(props.ToDoListID, props.task.id, title));
+        dispatch(ChangeTaskTitle(props.ToDoListID, props.task.id, title));
     }, [dispatch, props.ToDoListID, props.task.id]);
+
     const deleteTask = useCallback(() => {
-        dispatch(DeleteTaskTC(props.ToDoListID, props.task.id));
+        dispatch(DeleteTask(props.ToDoListID, props.task.id));
     }, [dispatch, props.ToDoListID, props.task.id]);
+
     const changeStatusTask = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         const newTaskStatus = e.currentTarget.checked;
-        dispatch(ChangeTaskStatusTC(props.ToDoListID, props.task.id, newTaskStatus ? TaskStatus.Completed : TaskStatus.New));
+        dispatch(ChangeTaskStatus(props.ToDoListID, props.task.id, newTaskStatus ? TaskStatus.Completed : TaskStatus.New));
     }, [dispatch, props.ToDoListID, props.task.id]);
+
     return (
 
         <div className={'task'}>

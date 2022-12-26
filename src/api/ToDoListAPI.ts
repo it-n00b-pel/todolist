@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
+
 import {TaskStatus} from '../store/ENUM/ENUM';
 
 const instance = axios.create({
@@ -10,43 +11,43 @@ const instance = axios.create({
 });
 
 export const toDoListAPI = {
-    getToDoLists() {
-        return instance.get<ToDoListType[]>('todo-lists',);
+    getToDoLists(): Promise<AxiosResponse<ToDoListType[]>> {
+        return instance.get<ToDoListType[]>('todo-lists');
     },
-    deleteToDoList(toDoListID: string) {
+    deleteToDoList(toDoListID: string): Promise<AxiosResponse<ResponseType>> {
         return instance.delete<ResponseType>(`todo-lists/${toDoListID}`);
     },
-    addNewToDoList(title: string) {
+    addNewToDoList(title: string): Promise<AxiosResponse<ResponseType<{ item: ToDoListType }>>> {
         return instance.post<ResponseType<{ item: ToDoListType }>>(`todo-lists`, {title});
     },
-    updateToDoList(toDoListID: string, title: string) {
+    updateToDoList(toDoListID: string, title: string): Promise<AxiosResponse<ResponseType<{ item: ToDoListType }>>> {
         return instance.put<ResponseType<{ item: ToDoListType }>>(`todo-lists/${toDoListID}`, {title});
     },
-    getTasks(toDoListID: string) {
+    getTasks(toDoListID: string): Promise<AxiosResponse<GetTaskResponse>> {
         return instance.get<GetTaskResponse>(`todo-lists/${toDoListID}/tasks`);
     },
-    addNewTask(toDoListID: string, title: string) {
+    addNewTask(toDoListID: string, title: string): Promise<AxiosResponse<ResponseType<{ item: TaskType }>>> {
         return instance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${toDoListID}/tasks`, {title});
     },
-    deleteTask(toDoListID: string, taskID: string) {
+    deleteTask(toDoListID: string, taskID: string): Promise<AxiosResponse<ResponseType>> {
         return instance.delete<ResponseType>(`todo-lists/${toDoListID}/tasks/${taskID}`);
     },
-    updateTask(toDoListID: string, taskID: string, task: TaskType) {
+    updateTask(toDoListID: string, taskID: string, task: TaskType): Promise<AxiosResponse<ResponseType<{ item: TaskType }>>> {
         return instance.put<ResponseType<{ item: TaskType }>>(`todo-lists/${toDoListID}/tasks/${taskID}/`, task);
-    }
+    },
 
 };
 
 export const authApi = {
-    login(data: LoginParamsType) {
+    login(data: LoginParamsType): Promise<AxiosResponse<ResponseType<{ userId: number }>>> {
         return instance.post<ResponseType<{ userId: number }>>('/auth/login', data);
     },
-    me() {
+    me(): Promise<AxiosResponse<ResponseType<{ data: LoginParamsType }>>> {
         return instance.get<ResponseType<{ data: LoginParamsType }>>(`/auth/me`);
     },
-    logout() {
+    logout(): Promise<AxiosResponse<ResponseType>> {
         return instance.delete<ResponseType>(`/auth/login`);
-    }
+    },
 };
 
 export type ResponseType<T = {}> = {
@@ -57,7 +58,7 @@ export type ResponseType<T = {}> = {
     data: T
 }
 
-type GetTaskResponse = {
+export type GetTaskResponse = {
     items: TaskType[],
     totalCount: number
     error: null

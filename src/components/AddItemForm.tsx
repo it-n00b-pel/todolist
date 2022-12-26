@@ -10,9 +10,9 @@ type AddItemFormPropsType = {
 }
 
 export const AddItemForm = memo((props: AddItemFormPropsType) => {
-    console.log('ADD ITEM FORMa');
     let [title, setTitle] = useState('');
     let [error, setError] = useState<string | null>(null);
+
     const addItem = useCallback(() => {
         if (title.trim() !== '') {
             props.addItem(title);

@@ -1,6 +1,8 @@
 import React from 'react';
-import {useAppSelector} from '../store/store';
+
 import LinearProgress from '@mui/material/LinearProgress';
+
+import {useAppSelector} from '../store/store';
 
 const AppLoader = () => {
     const isLoading = useAppSelector(state => state.app.status);

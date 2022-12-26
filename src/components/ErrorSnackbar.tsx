@@ -1,6 +1,7 @@
 import React, {memo} from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, {AlertProps} from '@mui/material/Alert';
+
 import {SetAppErrorAC} from '../store/reducers/appReducer';
 import {useAppDispatch} from '../store/store';
 

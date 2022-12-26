@@ -8,11 +8,16 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from 'formik';
-import {loginTC} from '../../store/reducers/auth-reducer';
-import {useAppDispatch, useAppSelector} from '../../store/store';
+
 import {Navigate} from 'react-router-dom';
+
+import {useAppDispatch, useAppSelector} from '../../store/store';
+
+
+import {setPreloaderStatusAC} from '../../store/reducers/appReducer';
+import {login} from '../../store/reducers/saga/authSaga';
+
 import s from './Login.module.css';
-import {SetPreloaderStatusAC} from '../../store/reducers/appReducer';
 
 type FormikErrorType = {
     email?: string
@@ -23,12 +28,12 @@ type FormikErrorType = {
 export const Login = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const dispatch = useAppDispatch();
-    dispatch(SetPreloaderStatusAC('idle'));
+    dispatch(setPreloaderStatusAC('idle'));
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
-            rememberMe: true
+            rememberMe: true,
         },
         validate: values => {
             const errors: FormikErrorType = {};
@@ -47,9 +52,9 @@ export const Login = () => {
         },
         onSubmit: values => {
             // alert(JSON.stringify(values));.
-            dispatch(loginTC({email: values.email, password: values.password}));
+            dispatch(login({email: values.email, password: values.password}));
             formik.resetForm();
-        }
+        },
     });
     if (isLoggedIn) return <Navigate to="/"/>;
 

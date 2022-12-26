@@ -66,7 +66,7 @@
 
 .taskTitle {
     margin: 0;
-    max-width: 100%;
+    max-width: 300px;
     white-space: nowrap;
     overflow: hidden;
     padding: 2px;
